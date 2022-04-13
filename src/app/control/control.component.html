@@ -1,0 +1,14 @@
+<div class="wrapper">
+  <div class="switch">
+    <button (click)="addBlock()">+</button>
+    <button (click)="rmBlock()">-</button>
+  </div>
+  <div class="budget"></div>
+  <div class="blocks">
+    <div *ngFor="let block of blocks">
+      <block [name]="block.name" [percent]="block.percent" [sum]="block.sum"></block>
+    </div>
+  </div>
+  <div class="costs"></div>
+</div>
+

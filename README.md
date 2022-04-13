@@ -94,7 +94,7 @@
 
 Упор в минимализм, функциональный дизайн. Светлый фон, яркими цветами выделяются акценты: логотип, заполняющиеся полоски, общий бюджет.
 
-[Figma, режим просмотра](https://www.figma.com/proto/RtngiqvSYKLCl5fPUU9P8b/Curly-Life?node-id=103%3A448&scaling=scale-down-width&page-id=0%3A1&starting-point-node-id=103%3A448)
+[Figma, режим просмотра](https://www.figma.com/proto/RtngiqvSYKLCl5fPUU9P8b/Curly-Life?node-id=103%3A448&scaling=scale-down-width&page-id=0%3A1&starting-point-node-id=103%3A448)  
 [Figma, режим редактирования](https://www.figma.com/file/RtngiqvSYKLCl5fPUU9P8b/Curly-Life?node-id=0%3A1)
 
 

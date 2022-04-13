@@ -1,0 +1,10 @@
+.panel {
+  background-color: white;
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 90%;
+  height: 90%;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+}
