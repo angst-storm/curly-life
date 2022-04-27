@@ -1,0 +1,22 @@
+main {
+  background-color: white;
+  position: absolute;
+  top: 8%;
+  left: 3%;
+  width: 94%;
+  height: 92%;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  display: grid;
+  grid-template-rows: 2fr 18fr;
+  grid-template-columns: 28fr 22fr;
+  grid-gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.blocks, .budget, .costs {
+  padding: 15px;
+  border: 3px #6194D7 solid;
+  border-radius: 25px;
+}

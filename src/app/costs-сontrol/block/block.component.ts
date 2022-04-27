@@ -12,4 +12,6 @@ export class BlockComponent {
     public percent: number = 0;
     @Input()
     public sum: number = 0;
+    @Input()
+    public fill: number = 0;
 }

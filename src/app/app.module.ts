@@ -2,30 +2,24 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
-import { AppComponent } from './app/app.component';
-import { AuthComponent } from './auth/auth.component';
-import { ControlComponent } from './control/control.component';
-import { ConstructorComponent } from './constructor/constructor.component';
-import { BlockComponent } from './block/block.component';
+import { CostsControlComponent } from './costs-сontrol/costs-control.component';
+import { BlockComponent } from './costs-сontrol/block/block.component';
 
-import { BlockService } from './services/block.service';
+import { PlanService } from './services/planElements.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        AuthComponent,
-        ControlComponent,
-        ConstructorComponent,
+        CostsControlComponent,
         BlockComponent,
     ],
     imports: [
         BrowserModule,
-        CommonModule
+        CommonModule,
+        FormsModule
     ],
-    bootstrap: [AppComponent],
-    providers: [
-        BlockService
-    ]
+    bootstrap: [CostsControlComponent],
+    providers: [PlanService]
 })
 export class AppModule {
 }

@@ -1,0 +1,14 @@
+<main>
+    <div class="switch"></div>
+    <div class="budget"></div>
+    <div class="blocks">
+        <block *ngFor="let block of blocks" [name]="block.name" [percent]="block.percent" [sum]="block.sum" [fill]="block.fill < 100 ? block.fill / 2 : 51"></block>
+    </div>
+    <div class="costs">
+        <select [(ngModel)]="costName">
+            <option *ngFor="let block of blocks" value="{{block.name}}">{{block.name}}</option>
+        </select>
+        <input [(ngModel)]="costSum">
+        <button (click)="addCost()">Добавить трату</button>
+    </div>
+</main>
