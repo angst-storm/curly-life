@@ -11,7 +11,16 @@ export class PlanElement {
     }
 
     public subElements: PlanElement[];
-    public costs: Cost[];
+    private readonly _costs: Cost[] = [];
+    public get costs(): Cost[] {
+        return !this.subElements.length ? this._costs : this.subElements
+            .reduce((a: Cost[], b: PlanElement) => a.concat(b.costs), [])
+            .sort((a: Cost, b: Cost) => a.time < b.time ? 1 : a.time > b.time ? -1 : 0);
+    }
+
+    public addCost(cost: Cost): void {
+        this._costs.push(cost);
+    }
 
     private _sum: number;
 
@@ -29,7 +38,7 @@ export class PlanElement {
     constructor(sum: number, percent: number = 100, name: string = '') {
         this._sum = sum;
         this.subElements = [];
-        this.costs = [];
+        this._costs = [];
         this.freePercent = 100;
         this.percent = percent;
         this.name = name;

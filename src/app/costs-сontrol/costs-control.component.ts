@@ -11,15 +11,18 @@ import { Cost } from '../models/cost.model';
 })
 export class CostsControlComponent {
     public blocks: PlanElement[];
+    public costs: Cost[];
     public costSum: string = '';
     public costName: string = '';
 
     constructor(private _planService: PlanService) {
         this.blocks = _planService.plan.subElements;
+        this.costs = _planService.plan.costs;
     }
 
     public addCost(): void{
         const elem: PlanElement = this._planService.plan.subElements.filter((e: PlanElement) => e.name === this.costName)[0];
-        elem.costs.push(new Cost(parseInt(this.costSum), [elem]));
+        elem.addCost(new Cost(parseInt(this.costSum), [elem]));
+        this.costs = this._planService.plan.costs;
     }
 }

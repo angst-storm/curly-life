@@ -1,14 +1,16 @@
-<main>
-    <div class="switch"></div>
-    <div class="budget"></div>
-    <div class="blocks">
-        <block *ngFor="let block of blocks" [name]="block.name" [percent]="block.percent" [sum]="block.sum" [fill]="block.fill < 100 ? block.fill / 2 : 51"></block>
-    </div>
-    <div class="costs">
-        <select [(ngModel)]="costName">
-            <option *ngFor="let block of blocks" value="{{block.name}}">{{block.name}}</option>
-        </select>
-        <input [(ngModel)]="costSum">
-        <button (click)="addCost()">Добавить трату</button>
-    </div>
-</main>
+<button routerLink="/auth" routerLinkActive="active">Выйти</button>
+<button class="to-constructor" routerLink="/constructor" routerLinkActive="active">Настроить план</button>
+<div class="add-cost">
+    <select [(ngModel)]="costName">
+        <option *ngFor="let block of blocks" value="{{block.name}}">{{block.name}}</option>
+    </select>
+    <input [(ngModel)]="costSum">
+    <button (click)="addCost()">Добавить трату</button>
+</div>
+<div class="plan-list">
+    <block *ngFor="let block of blocks" [name]="block.name" [percent]="block.percent" [sum]="block.sum"
+           [fill]="block.fill"></block>
+</div>
+<div class="costs-list">
+    <cost *ngFor="let cost of costs" [name]="cost.name" [sum]="cost.sum"></cost>
+</div>

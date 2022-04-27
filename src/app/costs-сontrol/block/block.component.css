@@ -1,8 +1,6 @@
 .block {
-  border-bottom: 3px #6194D7 solid;
-  border-top: 3px #6194D7 solid;
-  font: 20px Montserrat, sans-serif;
-  color: #6194D7;
+  border: 1px solid black;
+  padding: 5px;
   margin-bottom: 10px;
 }
 
