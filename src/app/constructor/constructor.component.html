@@ -1,3 +1,5 @@
-<button routerLink="/auth" routerLinkActive="active">Выйти</button>
+<button class="to-costs-control" routerLink="/auth" routerLinkActive="active">Выйти</button>
 <button routerLink="/" routerLinkActive="active">Назад</button>
-<p>Конструктор</p>
+<div class="budget">
+    Бюджет: <input [(ngModel)]="planService.plan.sum" placeholder="name">
+</div>

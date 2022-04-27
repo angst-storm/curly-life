@@ -10,12 +10,14 @@ import { Cost } from '../models/cost.model';
     styleUrls: ['costs-control.component.css']
 })
 export class CostsControlComponent {
+    public sum: number;
     public blocks: PlanElement[];
     public costs: Cost[];
     public costSum: string = '';
     public costName: string = '';
 
     constructor(private _planService: PlanService) {
+        this.sum = _planService.plan.sum;
         this.blocks = _planService.plan.subElements;
         this.costs = _planService.plan.costs;
     }
