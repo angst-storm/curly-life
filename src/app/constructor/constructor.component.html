@@ -3,3 +3,26 @@
 <div class="budget">
     Бюджет: <input [(ngModel)]="planService.plan.sum" placeholder="name">
 </div>
+<div class="configure-block">
+    <select [(ngModel)]="configuredBlockPath" (change)="changeConfiguredBlock()">
+        <option *ngFor="let block of blocks" value="{{block.path}}">{{block.path}}</option>
+    </select>
+    <div class="add-block">
+        <input [(ngModel)]="addingBlockName">
+        {{configuredBlock.freePercent ? 1 : 0}}
+        <input type="range" [(ngModel)]="addingBlockPercent"
+               min="{{configuredBlock.freePercent ? 1: 0}}" max="{{configuredBlock.freePercent}}">
+        {{configuredBlock.freePercent}}
+        [{{addingBlockPercent}}]
+        <button (click)="addSubBlock()">Добавить подблок</button>
+    </div>
+    <div class="rename-block">
+        <input [(ngModel)]="configuredBlockNewName">
+        <button (click)="renameBlock()">Переименовать</button>
+    </div>
+    <button (click)="removeSubBlocks()">Очистить от подблоков</button>
+    <button (click)="removeBlock()">Удалить</button>
+</div>
+<div class="blocks">
+    <div *ngFor="let block of blocks.slice(1)">{{"|".repeat(block.level)}} {{block.name}} - {{block.percent}} %</div>
+</div>

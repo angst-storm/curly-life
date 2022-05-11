@@ -4,8 +4,8 @@ import { Cost } from './cost.model';
 export class PlanElement {
     public path: string;
     public subElements: PlanElement[] = [];
+    public freePercent: number = 100;
 
-    private _freePercent: number = 100;
     private readonly _costs: Cost[] = [];
 
     constructor(
@@ -74,11 +74,25 @@ export class PlanElement {
     }
 
     public addElement(name: string, percent: number): void {
-        if (percent <= this._freePercent) {
+        if (percent <= this.freePercent) {
             this.subElements.push(new PlanElement(Math.floor(this._sum * percent / 100), this.level + 1, percent, name, this.path));
-            this._freePercent -= percent;
+            this.freePercent -= percent;
         } else {
             throw new PlanError('Сумма процентных блоков больше 100%');
         }
+    }
+
+    public findFather(element: PlanElement): PlanElement{
+        let result: PlanElement = this;
+        for (const elementName of element.path.split(' > ').slice(0, -1)){
+            result = this.subElements.filter((e: PlanElement) => e.name === elementName)[0];
+        }
+
+        return result;
+    }
+
+    public resetPath(path: string): void {
+        this.path = !path.length ? this.name : `${path} > ${this.name}`;
+        this.subElements.forEach((e: PlanElement) => e.resetPath(this.path));
     }
 }
