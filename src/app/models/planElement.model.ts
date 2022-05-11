@@ -2,27 +2,21 @@ import { PlanError } from './planError.model';
 import { Cost } from './cost.model';
 
 export class PlanElement {
-    public percent: number;
-    public freePercent: number;
-    public name: string;
+    public path: string;
+    public subElements: PlanElement[] = [];
 
-    public get fill(): number {
-        return Math.floor(this.costs.reduce((a: number, b: Cost) => a + b.sum, 0) / this.sum * 100);
-    }
-
-    public subElements: PlanElement[];
+    private _freePercent: number = 100;
     private readonly _costs: Cost[] = [];
-    public get costs(): Cost[] {
-        return !this.subElements.length ? this._costs : this.subElements
-            .reduce((a: Cost[], b: PlanElement) => a.concat(b.costs), [])
-            .sort((a: Cost, b: Cost) => a.time < b.time ? 1 : a.time > b.time ? -1 : 0);
-    }
 
-    public addCost(cost: Cost): void {
-        this._costs.push(cost);
+    constructor(
+        private _sum: number,
+        public level: number = 0,
+        public percent: number = 100,
+        public name: string = '',
+        path: string = ''
+    ) {
+        this.path = !path.length ? name : `${path} > ${name}`;
     }
-
-    private _sum: number;
 
     public get sum(): number {
         return this._sum;
@@ -35,19 +29,54 @@ export class PlanElement {
         this._sum = value;
     }
 
-    constructor(sum: number, percent: number = 100, name: string = '') {
-        this._sum = sum;
-        this.subElements = [];
-        this._costs = [];
-        this.freePercent = 100;
-        this.percent = percent;
-        this.name = name;
+    public get costs(): Cost[] {
+        return !this.subElements.length ? this._costs : this.subElements
+            .reduce((a: Cost[], b: PlanElement) => a.concat(b.costs), [])
+            .sort((a: Cost, b: Cost) => a.time < b.time ? 1 : a.time > b.time ? -1 : 0);
+    }
+
+    public get costsSum(): number {
+        return this.costs.reduce((a: number, b: Cost) => a + b.sum, 0);
+    }
+
+    public get fill(): number {
+        return Math.floor(this.costsSum / this.sum * 100);
+    }
+
+    public get endElements(): PlanElement[] {
+        return !this.subElements.length ? [this] : this.subElements
+            .reduce((a: PlanElement[], b: PlanElement) => a.concat(b.endElements), []);
+    }
+
+    public get allElements(): PlanElement[] {
+        let result: PlanElement[] = [];
+        for (const element of this.subElements) {
+            result.push(element);
+            result = result.concat(element.allElements);
+        }
+
+        return result;
+    }
+
+    public addCost(cost: Cost): void {
+        if (this.subElements.length !== 0) {
+            throw new PlanError('Добавлена трата в блок, у которого есть подблоки');
+        }
+        this._costs.push(cost);
+    }
+
+    public removeCost(cost: Cost): void {
+        this._costs.splice(this._costs.indexOf(cost), 1);
+    }
+
+    public getElement(name: string): PlanElement {
+        return this.subElements.filter((e: PlanElement) => e.name === name)[0];
     }
 
     public addElement(name: string, percent: number): void {
-        if (percent <= this.freePercent) {
-            this.subElements.push(new PlanElement(Math.floor(this._sum * percent / 100), percent, name));
-            this.freePercent -= percent;
+        if (percent <= this._freePercent) {
+            this.subElements.push(new PlanElement(Math.floor(this._sum * percent / 100), this.level + 1, percent, name, this.path));
+            this._freePercent -= percent;
         } else {
             throw new PlanError('Сумма процентных блоков больше 100%');
         }

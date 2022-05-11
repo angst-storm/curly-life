@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { CostsControlComponent } from './costs-сontrol/costs-control.component';
 import { BlockComponent } from './costs-сontrol/block/block.component';
@@ -16,7 +15,7 @@ import { AuthComponent } from './auth/auth.component';
 import { MyAppComponent } from './my-app/my-app.component';
 
 // определение маршрутов
-const appRoutes: Routes =[
+const appRoutes: Routes = [
     { path: '', component: CostsControlComponent },
     { path: 'constructor', component: ConstructorComponent },
     { path: 'register', component: RegisterComponent },

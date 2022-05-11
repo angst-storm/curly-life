@@ -3,15 +3,20 @@
 <div class="budget">Бюджет: {{sum}}</div>
 <div class="add-cost">
     <select [(ngModel)]="costName">
-        <option *ngFor="let block of blocks" value="{{block.name}}">{{block.name}}</option>
+        <option *ngFor="let block of endBlocks" value="{{block.name}}">{{block.path}}</option>
     </select>
     <input [(ngModel)]="costSum">
     <button (click)="addCost()">Добавить трату</button>
 </div>
 <div class="plan-list">
-    <block *ngFor="let block of blocks" [name]="block.name" [percent]="block.percent" [sum]="block.sum"
-           [fill]="block.fill"></block>
+    <block *ngFor="let block of blocks"
+           [name]="block.name"
+           [percent]="block.percent"
+           [sum]="block.sum"
+           [costsSum]="block.costsSum"
+           [level]="block.level"></block>
 </div>
 <div class="costs-list">
-    <cost *ngFor="let cost of costs" [name]="cost.name" [sum]="cost.sum"></cost>
+    <cost *ngFor="let cost of costs" [name]="cost.name" [sum]="cost.sum" [cost]="cost"
+          (costDeleted)="updateCosts()"></cost>
 </div>

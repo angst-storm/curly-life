@@ -4,6 +4,10 @@
     margin-bottom: 10px;
 }
 
-.sum {
+.right {
     float: right;
+}
+
+button.right {
+    margin-left: 10px;
 }
