@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { ReactiveFormsModule }   from '@angular/forms';
 
 import { CostsControlComponent } from './costs-сontrol/costs-control.component';
 import { BlockComponent } from './costs-сontrol/block/block.component';
@@ -37,6 +38,7 @@ const appRoutes: Routes = [
         BrowserModule,
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
         RouterModule.forRoot(appRoutes)
     ],
     bootstrap: [MyAppComponent],

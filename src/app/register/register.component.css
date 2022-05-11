@@ -1,0 +1,11 @@
+.field {
+    margin: 10px;
+}
+
+.danger {
+    margin-left: 5px;
+    color: white;
+    background-color: red;
+    border-radius: 5px;
+    padding: 3px;
+}
