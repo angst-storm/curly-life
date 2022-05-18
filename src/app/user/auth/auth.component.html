@@ -1,0 +1,14 @@
+<form [formGroup]="viewModel.form">
+    <div class="field">
+        <label>Логин: </label>
+        <input formControlName="login">
+    </div>
+
+    <div class="field">
+        <label>Пароль: </label>
+        <input formControlName="password">
+    </div>
+    <div *ngIf="wrongData">Пароль или логин введены неверно</div>
+    <button class="field" type="submit" (click)="submit()">Войти</button>
+    <a class="field" routerLink="/user/reg" routerLinkActive="active">Регистрация</a>
+</form>

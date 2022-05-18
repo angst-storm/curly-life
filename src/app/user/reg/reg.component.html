@@ -1,8 +1,8 @@
-<form [formGroup]="regForm">
+<form [formGroup]="viewModel.form">
     <div class="field">
         <label>Логин: </label>
         <input formControlName="login">
-        <span class="danger" *ngIf="regForm.controls['login'].invalid && regForm.controls['login'].touched">
+        <span class="danger" *ngIf="viewModel.form.controls['login'].invalid && viewModel.form.controls['login'].touched">
             Обязательно к заполнению
         </span>
     </div>
@@ -10,19 +10,19 @@
     <div class="field">
         <label>Пароль: </label>
         <input formControlName="password">
-        <span class="danger" *ngIf="regForm.controls['password'].invalid && regForm.controls['password'].touched">
+        <span class="danger" *ngIf="viewModel.form.controls['password'].invalid && viewModel.form.controls['password'].touched">
             Пароль должен быть длиннее 8 символов и состоять только из цифр, прописных или строчных букв латинского алфавита, а также символов !"#$%&'()*+,-.
         </span>
     </div>
 
     <div class="field">
         <label>Подтверждение пароля: </label>
-        <input formControlName="confirmPassword">
-        <span class="danger" *ngIf="regForm.hasError('notSame') && regForm.controls['confirmPassword'].touched">
+        <input formControlName="passwordConfirm">
+        <span class="danger" *ngIf="viewModel.form.hasError('notSame') && viewModel.form.controls['passwordConfirm'].touched">
             Пароли не совпадают
         </span>
     </div>
 
-    <button class="field" type="submit" routerLink="/auth" routerLinkActive="active">Регистрация</button>
-    <a class="field" routerLink="/auth" routerLinkActive="active">Войти</a>
+    <button class="field" type="submit" (click)="submit()">Регистрация</button>
+    <a class="field" routerLink="/auth/user" routerLinkActive="active">Войти</a>
 </form>
