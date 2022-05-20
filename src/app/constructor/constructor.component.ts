@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { PlanService } from '../services/planElements.service';
 import { PlanElement } from '../models/planElement.model';
 import { Cost } from '../models/cost.model';
+import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'constructor',
@@ -16,7 +18,7 @@ export class ConstructorComponent {
     public addingBlockPercent: number = 0;
     public configuredBlock: PlanElement;
 
-    constructor(public planService: PlanService) {
+    constructor(public planService: PlanService, private _userService: UserService, private _router: Router) {
         this.configuredBlock = planService.plan;
         this.blocks = [planService.plan].concat(planService.plan.allElements);
     }
@@ -50,5 +52,10 @@ export class ConstructorComponent {
 
     public changeConfiguredBlock(): void {
         this.configuredBlock = this.blocks.filter((b: PlanElement) => b.path === this.configuredBlockPath)[0];
+    }
+
+    public exit(): void {
+        this._userService.deleteToken();
+        this._router.navigate(['/user/auth']);
     }
 }

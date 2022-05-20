@@ -7,9 +7,10 @@ export class AuthViewModel {
         password: ['', [Validators.required]],
     });
 
-    constructor (private _fb : FormBuilder) { }
+    constructor(private _fb: FormBuilder) {
+    }
 
-    public toModel() : AuthData {
+    public toModel(): AuthData {
         return {
             login: this.form.get('login')?.value,
             password: this.form.get('password')?.value,

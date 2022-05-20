@@ -22,7 +22,7 @@ export class AuthComponent {
             const model: AuthData = this.viewModel.toModel();
             const isAuthorised : boolean = this._userService.authoriseUser(model);
             if (isAuthorised) {
-                this._router.navigate(['/']);
+                this._router.navigate(['/control']);
             } else {
                 this.wrongData = !isAuthorised;
             }

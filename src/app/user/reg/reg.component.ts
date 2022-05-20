@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegViewModel } from '../view-model/reg.view-model';
-import { RegModel } from '../../models/reg.model';
 import { UserService } from '../../services/user.service';
 import { FormBuilder } from '@angular/forms';
+import { AuthData } from '../../models/auth.model';
 
 @Component({
     selector: 'reg',
@@ -18,7 +18,7 @@ export class RegComponent {
 
     public submit(): void {
         if (this.viewModel.form.valid) {
-            const data: RegModel = this.viewModel.toModel();
+            const data: AuthData = this.viewModel.toModel();
             this._userService.registerUser(data);
             this._router.navigate(['/user/auth']);
         }

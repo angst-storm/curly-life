@@ -1,5 +1,5 @@
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { RegModel } from '../../models/reg.model';
+import { AuthData } from '../../models/auth.model';
 
 export class RegViewModel {
     public form: FormGroup = this._fb.group({
@@ -23,11 +23,10 @@ export class RegViewModel {
     constructor(private _fb: FormBuilder) {
     }
 
-    public toModel(): RegModel {
+    public toModel(): AuthData {
         return {
             login: this.form.get('login')?.value,
-            password: this.form.get('password')?.value,
-            passwordConfirm: this.form.get('passwordConfirm')?.value,
+            password: this.form.get('password')?.value
         };
     }
 }

@@ -1,16 +1,50 @@
 import { Injectable } from '@angular/core';
-import { RegModel } from '../models/reg.model';
 import { AuthData } from '../models/auth.model';
+import { ServerService } from './server.service';
+
 
 @Injectable()
 export class UserService {
-    private _users: AuthData[] = [];
-    public registerUser(data: RegModel): void {
-        this._users.push({ login: data.login, password: data.password });
-        console.log(this._users);
+    private _token: string | null = null;
+
+    constructor(private _server: ServerService) {
+        this._token = localStorage.getItem('token');
+    }
+
+    public get token(): string | null {
+        return this._token;
+    }
+
+    public updateToken(value: string): void {
+        this._token = value;
+        localStorage.setItem('token', value);
+    }
+
+    public checkToken(): boolean {
+        if (this._token !== null) {
+            return this._server.checkToken(this._token);
+        }
+
+        return false;
+    }
+
+    public deleteToken(): void {
+        this._token = null;
+        localStorage.removeItem('token');
+    }
+
+    public registerUser(data: AuthData): void {
+        this._server.postUser(data);
     }
 
     public authoriseUser(data: AuthData): boolean {
-        return this._users.map((u: AuthData) => JSON.stringify(u)).includes(JSON.stringify(data));
+        const token: string | null = this._server.getToken(data);
+        if (token !== null) {
+            this.updateToken(token);
+
+            return true;
+        }
+
+        return false;
     }
 }
