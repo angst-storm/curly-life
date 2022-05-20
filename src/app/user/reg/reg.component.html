@@ -3,7 +3,7 @@
         <label>Логин: </label>
         <input formControlName="login">
         <span class="danger" *ngIf="viewModel.form.controls['login'].invalid && viewModel.form.controls['login'].touched">
-            Обязательно к заполнению
+            Логин должен быть длиннее 6 символов
         </span>
     </div>
 

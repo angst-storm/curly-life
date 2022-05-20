@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserComponent } from './user.component';
-import { UserService } from '../services/user.service';
-import { ServerService } from '../services/server.service';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
     {
@@ -28,8 +27,10 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [
+        UserComponent
     ],
     imports: [
+        FormsModule,
         RouterModule.forChild(routes)
     ],
     providers: [

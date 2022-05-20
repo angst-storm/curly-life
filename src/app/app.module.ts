@@ -1,21 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { RootComponent } from './root.component';
 import { AppComponent } from './app.component';
 
-import { PlanService } from './services/planElements.service';
-import { CostsControlComponent } from './costs-сontrol/costs-control.component';
-import { ConstructorComponent } from './constructor/constructor.component';
-import { BlockComponent } from './costs-сontrol/block/block.component';
-import { CostComponent } from './costs-сontrol/cost/cost.component';
-import { RootComponent } from './root.component';
 import { AuthGuard } from './guards/auth.guard';
+
+import { PlanService } from './services/planElements.service';
 import { UserService } from './services/user.service';
 import { ServerService } from './services/server.service';
-import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
     {
@@ -49,17 +43,9 @@ const routes: Routes = [
     declarations: [
         RootComponent,
         AppComponent,
-        UserComponent,
-        CostsControlComponent,
-        ConstructorComponent,
-        BlockComponent,
-        CostComponent
     ],
     imports: [
         BrowserModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
         RouterModule.forRoot(routes)
     ],
     providers: [
