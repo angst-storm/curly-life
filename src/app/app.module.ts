@@ -32,7 +32,7 @@ const routes: Routes = [
             },
             {
                 path: '**',
-                redirectTo: '/user/auth',
+                redirectTo: '/control',
                 pathMatch: 'full'
             }
         ]
