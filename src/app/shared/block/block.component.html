@@ -1,0 +1,8 @@
+<div class="container">
+    <div class="vl" *ngFor="let _ of (level - 1) | repeat"></div>
+    <div class='block' (click)="click()">
+        <span>{{name}} - {{percent}} %</span>
+        <span class='right'>{{sum}} ₽</span>
+        <ng-content></ng-content>
+    </div>
+</div>

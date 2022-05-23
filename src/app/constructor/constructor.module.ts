@@ -3,6 +3,7 @@ import { ConstructorComponent } from './constructor.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
     { path: '', component: ConstructorComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
     imports: [
         CommonModule,
         FormsModule,
+        SharedModule,
         RouterModule.forChild(routes)
     ],
     providers: [],

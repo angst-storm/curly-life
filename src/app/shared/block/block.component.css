@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+}
+
+.vl {
+    border-left: 1px solid black;
+    margin-right: 5px;
+}
+
+.block {
+    border: 1px solid black;
+    padding: 5px;
+    flex-grow: 1;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.block:hover {
+    background-color: lightgray;
+}
+
+.block:active {
+    background-color: gray;
+}
+
+.right {
+    float: right;
+}

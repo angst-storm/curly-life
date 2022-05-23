@@ -13,8 +13,9 @@
            [name]="block.name"
            [percent]="block.percent"
            [sum]="block.sum"
-           [costsSum]="block.costsSum"
-           [level]="block.level"></block>
+           [level]="block.level">
+        <bar [sum]="block.sum" [costsSum]="block.costsSum"></bar>
+    </block>
 </div>
 <div class="costs-list">
     <cost *ngFor="let cost of costs" [name]="cost.name" [sum]="cost.sum" [cost]="cost"

@@ -1,19 +1,13 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-    selector: 'block',
-    templateUrl: 'block.component.html',
-    styleUrls: ['block.component.css']
+    selector: 'bar',
+    templateUrl: './bar.component.html',
+    styleUrls: ['./bar.component.css']
 })
-export class BlockComponent {
-    @Input()
-    public name: string = '0';
-    @Input()
-    public percent: number = 0;
+export class BarComponent {
     @Input()
     public sum: number = 0;
-    @Input()
-    public level: number = 0;
     @Input()
     public costsSum: number = 0;
 
@@ -33,9 +27,4 @@ export class BlockComponent {
         return this.fill <= 50 ? 'lightgreen' : this.fill <= 100 ? 'yellow' : 'red';
     }
 
-    public get backgroundColor(): string {
-        const value: number = 255 - 40 * (this.level - 1);
-
-        return `rgb(${value},${value},${value})`;
-    }
 }

@@ -24,5 +24,9 @@
     <button (click)="removeBlock()">Удалить</button>
 </div>
 <div class="blocks">
-    <div *ngFor="let block of blocks.slice(1)">{{"|".repeat(block.level)}} {{block.name}} - {{block.percent}} %</div>
+    <block *ngFor="let block of blocks.slice(1)"
+           [name]="block.name"
+           [percent]="block.percent"
+           [level]="block.level"
+           [sum]="block.sum"></block>
 </div>
