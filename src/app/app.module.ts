@@ -22,7 +22,7 @@ const routes: Routes = [
             },
             {
                 path: 'control',
-                loadChildren: () => import('./costs-сontrol/costs-control.module').then((m: any) => m.CostsControlModule),
+                loadChildren: () => import('./costs-control/costs-control.module').then((m: any) => m.CostsControlModule),
                 canActivate: [AuthGuard]
             },
             {
