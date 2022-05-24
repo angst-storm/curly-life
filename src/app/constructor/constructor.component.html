@@ -3,10 +3,9 @@
 <div class="budget">
     Бюджет: <input [(ngModel)]="planService.plan.sum" placeholder="name">
 </div>
-<div class="configure-block">
-    <select [(ngModel)]="configuredBlockPath" (change)="changeConfiguredBlock()">
-        <option *ngFor="let block of blocks" value="{{block.path}}">{{block.path}}</option>
-    </select>
+<div *ngIf="configurationInProgress" class="configure-block">
+    <button (click)="closeConfiguration()">X</button>
+    <h3><b>{{configuredBlock.path}}</b></h3>
     <div class="add-block">
         <input [(ngModel)]="addingBlockName">
         {{configuredBlock.freePercent ? 1 : 0}}
@@ -24,9 +23,11 @@
     <button (click)="removeBlock()">Удалить</button>
 </div>
 <div class="blocks">
-    <block *ngFor="let block of blocks.slice(1)"
+    <block *ngFor="let block of blocks"
            [name]="block.name"
            [percent]="block.percent"
            [level]="block.level"
-           [sum]="block.sum"></block>
+           [sum]="block.sum"
+           (blockClick)="configure(block)"></block>
+    <button (click)="configure(planService.plan)">+</button>
 </div>
