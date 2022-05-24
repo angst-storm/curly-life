@@ -6,13 +6,13 @@
     box-sizing: border-box;
 }
 
-.configuration, .adding {
+.configuration {
     display: flex;
     flex-direction: column;
     margin-bottom: -10px;
 }
 
-.configuration *, .adding * {
+.configuration * {
     margin-bottom: 5px;
 }
 

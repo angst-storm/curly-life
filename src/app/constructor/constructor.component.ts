@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { PlanService } from '../services/planElements.service';
 import { PlanElement } from '../models/planElement.model';
-import { Cost } from '../models/cost.model';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { ModalService } from '../services/modal.service';
+import { AddPanelComponent } from './add-panel/add-panel.component';
+import { BlockData } from './add-panel/blockData.model';
 
 @Component({
     selector: 'constructor',
@@ -13,9 +14,10 @@ import { ModalService } from '../services/modal.service';
 })
 export class ConstructorComponent {
     public blocks: PlanElement[];
-    public addingBlockName: string = '';
-    public addingBlockPercent: number = 0;
     public configuredBlock: PlanElement;
+
+    @ViewChild(AddPanelComponent, { static: false })
+    private _addPanel: AddPanelComponent | undefined;
 
     constructor(public planService: PlanService,
         private _userService: UserService,
@@ -36,19 +38,12 @@ export class ConstructorComponent {
 
     public startSubBlockAdding(block: PlanElement): void {
         this.closeConfiguration();
-        this.configuredBlock = block;
-        this.addingBlockPercent = block.freePercent;
-        this._modalService.open('adding');
+        this._addPanel?.open(block);
     }
 
-    public addSubBlock(): void {
-        this.configuredBlock.createSubElement(this.addingBlockName, this.addingBlockPercent);
-        this.endSubBlockAdding();
+    public addSubBlock(data: BlockData): void {
+        this.configuredBlock.createSubElement(data.name, data.percent);
         this.updateBlocks();
-    }
-
-    public endSubBlockAdding(): void {
-        this._modalService.close('adding');
     }
 
     public removeSubBlocks(): void {

@@ -35,23 +35,5 @@
     </div>
 </modal>
 <modal id="adding">
-    <div class="adding">
-        <div>
-            <input [(ngModel)]="addingBlockName">
-        </div>
-        <div>
-            {{configuredBlock.freePercent ? 1 : 0}}
-            <input type="range" [(ngModel)]="addingBlockPercent"
-                   min="{{configuredBlock.freePercent ? 1: 0}}" max="{{configuredBlock.freePercent}}">
-            {{configuredBlock.freePercent}}
-            <br>
-            {{addingBlockPercent}} %
-        </div>
-        <div>
-            <button (click)="addSubBlock()">Добавить подблок</button>
-        </div>
-        <div>
-            <button (click)="endSubBlockAdding()">Закрыть</button>
-        </div>
-    </div>
+    <add-panel (blockAdded)="addSubBlock($event)"></add-panel>
 </modal>

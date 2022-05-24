@@ -10,5 +10,5 @@ export class BlockComponent {
     @Input() public name: string = '';
     @Input() public percent: number = 0;
     @Input() public sum: number = 0;
-    @Output() public blockClick: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() public blockClick: EventEmitter<null> = new EventEmitter<null>();
 }
