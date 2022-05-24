@@ -1,9 +1,19 @@
-.budget, .configure-block, .add-block, .rename-block, .blocks {
+.budget, .add-block, .rename-block, .blocks {
     border: 2px solid black;
     width: 50%;
     padding: 10px;
     margin-bottom: 10px;
     box-sizing: border-box;
+}
+
+.configuration {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: -10px;
+}
+
+.configuration * {
+    margin-bottom: 5px;
 }
 
 .to-costs-control {

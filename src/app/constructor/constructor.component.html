@@ -3,25 +3,6 @@
 <div class="budget">
     Бюджет: <input [(ngModel)]="planService.plan.sum" placeholder="name">
 </div>
-<div *ngIf="configurationInProgress" class="configure-block">
-    <button (click)="closeConfiguration()">X</button>
-    <h3><b>{{configuredBlock.path}}</b></h3>
-    <div class="add-block">
-        <input [(ngModel)]="addingBlockName">
-        {{configuredBlock.freePercent ? 1 : 0}}
-        <input type="range" [(ngModel)]="addingBlockPercent"
-               min="{{configuredBlock.freePercent ? 1: 0}}" max="{{configuredBlock.freePercent}}">
-        {{configuredBlock.freePercent}}
-        [{{addingBlockPercent}}]
-        <button (click)="addSubBlock()">Добавить подблок</button>
-    </div>
-    <div class="rename-block">
-        <input [(ngModel)]="configuredBlockNewName">
-        <button (click)="renameBlock()">Переименовать</button>
-    </div>
-    <button (click)="removeSubBlocks()">Очистить от подблоков</button>
-    <button (click)="removeBlock()">Удалить</button>
-</div>
 <div class="blocks">
     <block *ngFor="let block of blocks"
            [name]="block.name"
@@ -31,3 +12,35 @@
            (blockClick)="configure(block)"></block>
     <button (click)="configure(planService.plan)">+</button>
 </div>
+<modal id="configuration">
+    <div class="configuration">
+        <div>
+            <input [(ngModel)]="configuredBlock.name">
+        </div>
+        <div>
+            <button>Добавить подблок</button>
+        </div>
+        <div>
+            <button (click)="removeSubBlocks()">Очистить от подблоков</button>
+            <span red> *это удалит все траты, связанные с этим блоком</span>
+        </div>
+        <div>
+            <button (click)="removeBlock()">Удалить</button>
+            <span red> *это удалит все траты, связанные с этим блоком</span>
+        </div>
+        <div>
+            <button (click)="closeConfiguration()">Закрыть</button>
+        </div>
+        <!--
+        <div class="add-block">
+            <input [(ngModel)]="addingBlockName">
+            {{configuredBlock.freePercent ? 1 : 0}}
+            <input type="range" [(ngModel)]="addingBlockPercent"
+                   min="{{configuredBlock.freePercent ? 1: 0}}" max="{{configuredBlock.freePercent}}">
+            {{configuredBlock.freePercent}}
+            [{{addingBlockPercent}}]
+            <button (click)="addSubBlock()">Добавить подблок</button>
+        </div>
+        -->
+    </div>
+</modal>

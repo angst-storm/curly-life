@@ -4,6 +4,7 @@ import { PlanElement } from '../models/planElement.model';
 import { Cost } from '../models/cost.model';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
+import { ModalService } from '../services/modal.service';
 
 @Component({
     selector: 'constructor',
@@ -16,9 +17,11 @@ export class ConstructorComponent {
     public addingBlockName: string = '';
     public addingBlockPercent: number = 0;
     public configuredBlock: PlanElement;
-    public configurationInProgress: boolean = false;
 
-    constructor(public planService: PlanService, private _userService: UserService, private _router: Router) {
+    constructor(public planService: PlanService,
+        private _userService: UserService,
+        private _router: Router,
+        private _modalService: ModalService) {
         this.configuredBlock = planService.plan;
         this.blocks = planService.plan.allElements;
     }
@@ -52,12 +55,12 @@ export class ConstructorComponent {
     }
 
     public configure(block: PlanElement): void {
-        this.configurationInProgress = true;
         this.configuredBlock = block;
+        this._modalService.open('configuration');
     }
 
     public closeConfiguration(): void {
-        this.configurationInProgress = false;
+        this._modalService.close('configuration');
     }
 
     public exit(): void {
