@@ -10,7 +10,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators }
 })
 export class AddPanelComponent {
     @Output() public blockAdded: EventEmitter<null> = new EventEmitter<null>();
-    public parentBlock: PlanElement | null = null;
+    public parentBlock: PlanElement = PlanElement.createPlan(0);
 
     public form: FormGroup = new FormGroup({
         'name': new FormControl('', Validators.required),
@@ -31,7 +31,6 @@ export class AddPanelComponent {
     }
 
     public close(): void {
-        this.parentBlock = null;
         this.form.controls['name'].setValue('');
         this.form.controls['percent'].setValue(0);
         this._modalService.close('add-panel-modal');
@@ -39,7 +38,7 @@ export class AddPanelComponent {
 
     public submit(): void {
         if (this.form.valid) {
-            this.parentBlock?.createSubElement(this.form.controls['name'].value,
+            this.parentBlock.createSubElement(this.form.controls['name'].value,
                 this.form.controls['percent'].value);
             this.blockAdded.emit();
             this.close();

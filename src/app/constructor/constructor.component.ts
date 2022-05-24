@@ -4,7 +4,7 @@ import { PlanElement } from '../models/planElement.model';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { ModalService } from '../services/modal.service';
-import { AddPanelComponent } from './add-panel/add-panel.component';
+import { ConfPanelComponent } from './conf-panel/conf-panel.component';
 
 @Component({
     selector: 'constructor',
@@ -13,42 +13,19 @@ import { AddPanelComponent } from './add-panel/add-panel.component';
 })
 export class ConstructorComponent {
     public blocks: PlanElement[];
-    public configuredBlock: PlanElement;
 
-    @ViewChild(AddPanelComponent, { static: false })
-    private _addPanel: AddPanelComponent | undefined;
+    @ViewChild(ConfPanelComponent, { static: false })
+    public confPanel: ConfPanelComponent | undefined;
 
     constructor(public planService: PlanService,
         private _userService: UserService,
         private _router: Router,
         private _modalService: ModalService) {
-        this.configuredBlock = planService.plan;
         this.blocks = planService.plan.allElements;
     }
 
     public configure(block: PlanElement): void {
-        this.configuredBlock = block;
-        this._modalService.open('configuration');
-    }
-
-    public closeConfiguration(): void {
-        this._modalService.close('configuration');
-    }
-
-    public addSubBlock(block: PlanElement): void {
-        this.closeConfiguration();
-        this._addPanel?.open(block);
-    }
-
-    public removeSubBlocks(): void {
-        this.configuredBlock.removeSubElements();
-        this.updateBlocks();
-    }
-
-    public removeBlock(): void {
-        this.configuredBlock.parent?.removeElement(this.configuredBlock);
-        this.closeConfiguration();
-        this.updateBlocks();
+        this.confPanel?.open(block);
     }
 
     public updateBlocks(): void {

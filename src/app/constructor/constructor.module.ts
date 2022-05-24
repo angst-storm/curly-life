@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { RedDirective } from '../directives/red.directive';
 import { AddPanelComponent } from './add-panel/add-panel.component';
+import { ConfPanelComponent } from './conf-panel/conf-panel.component';
 
 const routes: Routes = [
     { path: '', component: ConstructorComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         ConstructorComponent,
+        ConfPanelComponent,
         AddPanelComponent,
         RedDirective
     ],

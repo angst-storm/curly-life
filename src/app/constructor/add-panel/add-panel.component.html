@@ -5,8 +5,8 @@
                 <input formControlName="name">
             </div>
             <div>
-                1 <input formControlName="percent" type="range" min="1" max="{{parentBlock?.freePercent}}">
-                {{parentBlock?.freePercent}} [{{form.controls['percent'].value}} %]
+                1 <input formControlName="percent" type="range" min="1" max="{{parentBlock.freePercent}}">
+                {{parentBlock.freePercent}} [{{form.controls['percent'].value}} %]
             </div>
             <div>
                 <button (click)="submit()">Добавить подблок</button>

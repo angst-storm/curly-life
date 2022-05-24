@@ -1,0 +1,23 @@
+<modal id="conf-panel-modal">
+    <div class="panel">
+        <div>
+            <input [(ngModel)]="configuredBlock.name">
+        </div>
+        <div>
+            <button (click)="addSubBlock(configuredBlock)" [disabled]="!configuredBlock.freePercent">Добавить подблок</button>
+            <span red *ngIf="!configuredBlock.haveSubElements"> *это удалит все траты, связанные с этим блоком</span>
+        </div>
+        <div>
+            <button (click)="removeSubBlocks()">Очистить от подблоков</button>
+            <span red> *это удалит все траты, связанные с этим блоком</span>
+        </div>
+        <div>
+            <button (click)="removeBlock()">Удалить</button>
+            <span red> *это удалит все траты, связанные с этим блоком</span>
+        </div>
+        <div>
+            <button (click)="close()">Закрыть</button>
+        </div>
+    </div>
+</modal>
+<add-panel (blockAdded)="planChanged.emit()"></add-panel>
