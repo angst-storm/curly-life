@@ -5,7 +5,6 @@ import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { ModalService } from '../services/modal.service';
 import { AddPanelComponent } from './add-panel/add-panel.component';
-import { BlockData } from './add-panel/blockData.model';
 
 @Component({
     selector: 'constructor',
@@ -36,14 +35,9 @@ export class ConstructorComponent {
         this._modalService.close('configuration');
     }
 
-    public startSubBlockAdding(block: PlanElement): void {
+    public addSubBlock(block: PlanElement): void {
         this.closeConfiguration();
         this._addPanel?.open(block);
-    }
-
-    public addSubBlock(data: BlockData): void {
-        this.configuredBlock.createSubElement(data.name, data.percent);
-        this.updateBlocks();
     }
 
     public removeSubBlocks(): void {
@@ -57,12 +51,12 @@ export class ConstructorComponent {
         this.updateBlocks();
     }
 
+    public updateBlocks(): void {
+        this.blocks = this.planService.plan.allElements;
+    }
+
     public exit(): void {
         this._userService.deleteToken();
         this._router.navigate(['/user/auth']);
-    }
-
-    private updateBlocks(): void {
-        this.blocks = this.planService.plan.allElements;
     }
 }

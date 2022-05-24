@@ -10,7 +10,7 @@
            [level]="block.level"
            [sum]="block.sum"
            (blockClick)="configure(block)"></block>
-    <button (click)="startSubBlockAdding(planService.plan)" [disabled]="!planService.plan.freePercent">+</button>
+    <button (click)="addSubBlock(planService.plan)" [disabled]="!planService.plan.freePercent">+</button>
 </div>
 <modal id="configuration">
     <div class="configuration">
@@ -18,7 +18,7 @@
             <input [(ngModel)]="configuredBlock.name">
         </div>
         <div>
-            <button (click)="startSubBlockAdding(configuredBlock)" [disabled]="!configuredBlock.freePercent">Добавить подблок</button>
+            <button (click)="addSubBlock(configuredBlock)" [disabled]="!configuredBlock.freePercent">Добавить подблок</button>
             <span red *ngIf="!configuredBlock.haveSubElements"> *это удалит все траты, связанные с этим блоком</span>
         </div>
         <div>
@@ -35,5 +35,5 @@
     </div>
 </modal>
 <modal id="adding">
-    <add-panel (blockAdded)="addSubBlock($event)"></add-panel>
+    <add-panel (blockAdded)="updateBlocks()"></add-panel>
 </modal>

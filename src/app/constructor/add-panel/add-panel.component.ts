@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { PlanElement } from '../../models/planElement.model';
-import { BlockData } from './blockData.model';
 import { ModalService } from '../../services/modal.service';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
@@ -10,7 +9,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators }
     styleUrls: ['./add-panel.component.css']
 })
 export class AddPanelComponent {
-    @Output() public blockAdded: EventEmitter<BlockData> = new EventEmitter<BlockData>();
+    @Output() public blockAdded: EventEmitter<null> = new EventEmitter<null>();
     public parentBlock: PlanElement | null = null;
 
     public form: FormGroup = new FormGroup({
@@ -40,9 +39,9 @@ export class AddPanelComponent {
 
     public submit(): void {
         if (this.form.valid) {
-            const data: BlockData = new BlockData(this.form.controls['name'].value,
+            this.parentBlock?.createSubElement(this.form.controls['name'].value,
                 this.form.controls['percent'].value);
-            this.blockAdded.emit(data);
+            this.blockAdded.emit();
             this.close();
         }
     }
