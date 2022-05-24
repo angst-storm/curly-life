@@ -4,13 +4,14 @@ import { PlanElement } from '../models/planElement.model';
 @Injectable()
 export class PlanService {
     public plan: PlanElement;
+
     constructor() {
-        this.plan = new PlanElement(35000);
-        this.plan.addElement('Обязательные расходы', 50);
-        this.plan.addElement('Необязательные расходы', 30);
-        this.plan.addElement('Накопления', 20);
-        this.plan.getElement('Обязательные расходы').addElement('Продукты', 45);
-        this.plan.getElement('Обязательные расходы').addElement('ЖКХ', 40);
-        this.plan.getElement('Обязательные расходы').addElement('Подписки', 15);
+        this.plan = PlanElement.createPlan(35000);
+        const compulsoryExpenses: PlanElement = this.plan.createSubElement('Обязательные расходы', 50);
+        compulsoryExpenses.createSubElement('Продукты', 45);
+        compulsoryExpenses.createSubElement('ЖКХ', 40);
+        compulsoryExpenses.createSubElement('Подписки', 15);
+        this.plan.createSubElement('Необязательные расходы', 30);
+        this.plan.createSubElement('Накопления', 20);
     }
 }

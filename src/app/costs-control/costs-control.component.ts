@@ -27,7 +27,7 @@ export class CostsControlComponent {
 
     public addCost(): void {
         const elem: PlanElement = this.blocks.filter((e: PlanElement) => e.name === this.costName)[0];
-        elem.addCost(new Cost(parseInt(this.costSum), elem));
+        elem.createCost(parseInt(this.costSum));
         this.updateCosts();
     }
 

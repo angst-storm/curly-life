@@ -13,7 +13,6 @@ import { ModalService } from '../services/modal.service';
 })
 export class ConstructorComponent {
     public blocks: PlanElement[];
-    public configuredBlockNewName: string = '';
     public addingBlockName: string = '';
     public addingBlockPercent: number = 0;
     public configuredBlock: PlanElement;
@@ -26,34 +25,6 @@ export class ConstructorComponent {
         this.blocks = planService.plan.allElements;
     }
 
-    public addSubBlock(): void {
-        this.configuredBlock.addElement(this.addingBlockName, this.addingBlockPercent);
-        this.configuredBlock.costs.forEach((c: Cost) => this.configuredBlock.removeCost(c));
-        this.blocks = this.planService.plan.allElements;
-    }
-
-    public renameBlock(): void {
-        const oldName: string = this.configuredBlock.name;
-        this.configuredBlock.name = this.configuredBlockNewName;
-        this.configuredBlock.resetPath(this.configuredBlock.path.slice(0, -oldName.length - (this.configuredBlock.level === 1 ? 0 : 3)));
-        this.blocks = this.planService.plan.allElements;
-    }
-
-    public removeSubBlocks(): void {
-        this.configuredBlock.subElements = [];
-        this.configuredBlock.freePercent = 100;
-        this.blocks = this.planService.plan.allElements;
-    }
-
-    public removeBlock(): void {
-        const father: PlanElement = this.planService.plan.findFather(this.configuredBlock);
-        const elements: PlanElement[] = father.subElements;
-        father.freePercent += this.configuredBlock.percent;
-        elements.splice(elements.indexOf(this.configuredBlock), 1);
-        this.closeConfiguration();
-        this.blocks = this.planService.plan.allElements;
-    }
-
     public configure(block: PlanElement): void {
         this.configuredBlock = block;
         this._modalService.open('configuration');
@@ -63,8 +34,40 @@ export class ConstructorComponent {
         this._modalService.close('configuration');
     }
 
+    public startSubBlockAdding(block: PlanElement): void {
+        this.closeConfiguration();
+        this.configuredBlock = block;
+        this.addingBlockPercent = block.freePercent;
+        this._modalService.open('adding');
+    }
+
+    public addSubBlock(): void {
+        this.configuredBlock.createSubElement(this.addingBlockName, this.addingBlockPercent);
+        this.endSubBlockAdding();
+        this.updateBlocks();
+    }
+
+    public endSubBlockAdding(): void {
+        this._modalService.close('adding');
+    }
+
+    public removeSubBlocks(): void {
+        this.configuredBlock.removeSubElements();
+        this.updateBlocks();
+    }
+
+    public removeBlock(): void {
+        this.configuredBlock.parent?.removeElement(this.configuredBlock);
+        this.closeConfiguration();
+        this.updateBlocks();
+    }
+
     public exit(): void {
         this._userService.deleteToken();
         this._router.navigate(['/user/auth']);
+    }
+
+    private updateBlocks(): void {
+        this.blocks = this.planService.plan.allElements;
     }
 }
