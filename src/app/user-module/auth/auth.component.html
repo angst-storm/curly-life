@@ -1,14 +1,19 @@
 <form [formGroup]="viewModel.form">
-    <div class="field">
+    <div>
         <label>Логин: </label>
         <input formControlName="login">
     </div>
-
-    <div class="field">
+    <div>
         <label>Пароль: </label>
         <input formControlName="password">
     </div>
-    <div *ngIf="wrongData">Пароль или логин введены неверно</div>
-    <button class="field" type="submit" (click)="submit()">Войти</button>
-    <a class="field" routerLink="/user/reg" routerLinkActive="active">Регистрация</a>
+    <div *ngIf="wrongData">
+        Пароль или логин введены неверно
+    </div>
+    <div>
+        <button (click)="submit()">Войти</button>
+    </div>
+    <div>
+        <a routerLink="/user/reg" routerLinkActive="active">Регистрация</a>
+    </div>
 </form>

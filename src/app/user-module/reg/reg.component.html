@@ -1,28 +1,29 @@
 <form [formGroup]="viewModel.form">
-    <div class="field">
+    <div>
         <label>Логин: </label>
         <input formControlName="login">
         <span class="danger" *ngIf="viewModel.form.controls['login'].invalid && viewModel.form.controls['login'].touched">
             Логин должен быть длиннее 6 символов
         </span>
     </div>
-
-    <div class="field">
+    <div>
         <label>Пароль: </label>
         <input formControlName="password">
         <span class="danger" *ngIf="viewModel.form.controls['password'].invalid && viewModel.form.controls['password'].touched">
             Пароль должен быть длиннее 8 символов и состоять только из цифр, прописных или строчных букв латинского алфавита, а также символов !"#$%&'()*+,-.
         </span>
     </div>
-
-    <div class="field">
+    <div>
         <label>Подтверждение пароля: </label>
         <input formControlName="passwordConfirm">
         <span class="danger" *ngIf="viewModel.form.hasError('notSame') && viewModel.form.controls['passwordConfirm'].touched">
             Пароли не совпадают
         </span>
     </div>
-
-    <button class="field" type="submit" (click)="submit()">Регистрация</button>
-    <a class="field" routerLink="/auth/user" routerLinkActive="active">Войти</a>
+    <div>
+        <button (click)="submit()">Регистрация</button>
+    </div>
+    <div>
+        <a routerLink="/auth/user" routerLinkActive="active">Войти</a>
+    </div>
 </form>
