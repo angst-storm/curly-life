@@ -1,15 +1,11 @@
-.to-constructor {
+.to-constructor, .add-cost {
     margin-bottom: 10px;
 }
 
-.add-cost, .plan-list, .costs-list, .budget {
+.plan-list, .costs-list, .budget {
     border: 2px solid black;
     width: 50%;
     padding: 10px;
     margin-bottom: 10px;
     box-sizing: border-box;
-}
-
-.add-cost > * {
-    margin-right: 10px;
 }

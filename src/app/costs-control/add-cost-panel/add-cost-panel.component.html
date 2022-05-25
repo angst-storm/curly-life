@@ -1,0 +1,18 @@
+<modal id="add-cost-panel-modal">
+    <div class="panel" [formGroup]="form">
+        <div>
+            <select formControlName="index">
+                <option *ngFor="let i of plan.endElements.length | repeat" value="{{i}}">{{plan.endElements[i].path}}</option>
+            </select>
+        </div>
+        <div>
+            <input formControlName="sum">
+        </div>
+        <div>
+            <button (click)="submit()">Добавить трату</button>
+        </div>
+        <div>
+            <button (click)="close()">Закрыть</button>
+        </div>
+    </div>
+</modal>

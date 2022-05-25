@@ -10,7 +10,8 @@ import { ModalComponent } from './modal/modal.component';
     ],
     exports: [
         BlockComponent,
-        ModalComponent
+        ModalComponent,
+        RepeatPipe
     ],
     declarations: [
         RepeatPipe,

@@ -1,13 +1,7 @@
 <button (click)="exit()">Выйти</button>
 <button class="to-constructor" routerLink="/constructor" routerLinkActive="active">Настроить план</button>
 <div class="budget">Бюджет: {{sum}}</div>
-<div class="add-cost">
-    <select [(ngModel)]="costName">
-        <option *ngFor="let block of endBlocks" value="{{block.name}}">{{block.path}}</option>
-    </select>
-    <input [(ngModel)]="costSum">
-    <button (click)="addCost()">Добавить трату</button>
-</div>
+<button class="add-cost" (click)="addCostPanel.open()">Добавить трату</button>
 <div class="plan-list">
     <block *ngFor="let block of blocks"
            [name]="block.name"
@@ -21,3 +15,4 @@
     <cost *ngFor="let cost of costs" [name]="cost.name" [sum]="cost.sum" [cost]="cost"
           (costDeleted)="updateCosts()"></cost>
 </div>
+<add-cost-panel [plan]="planService.plan" (costAdded)="updateCosts()" #addCostPanel></add-cost-panel>

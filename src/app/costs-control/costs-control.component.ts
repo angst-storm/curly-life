@@ -13,26 +13,16 @@ import { Router } from '@angular/router';
 export class CostsControlComponent {
     public sum: number;
     public blocks: PlanElement[];
-    public endBlocks: PlanElement[];
     public costs: Cost[];
-    public costSum: string = '';
-    public costName: string = '';
 
-    constructor(private _planService: PlanService, private _userService: UserService, private _router: Router) {
-        this.sum = _planService.plan.sum;
-        this.blocks = _planService.plan.allElements;
-        this.endBlocks = _planService.plan.endElements;
-        this.costs = _planService.plan.costs;
-    }
-
-    public addCost(): void {
-        const elem: PlanElement = this.blocks.filter((e: PlanElement) => e.name === this.costName)[0];
-        elem.createCost(parseInt(this.costSum));
-        this.updateCosts();
+    constructor(public planService: PlanService, private _userService: UserService, private _router: Router) {
+        this.sum = planService.plan.sum;
+        this.blocks = planService.plan.allElements;
+        this.costs = planService.plan.costs;
     }
 
     public updateCosts(): void {
-        this.costs = this._planService.plan.costs;
+        this.costs = this.planService.plan.costs;
     }
 
     public exit(): void {

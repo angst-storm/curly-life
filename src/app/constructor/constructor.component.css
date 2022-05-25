@@ -6,16 +6,6 @@
     box-sizing: border-box;
 }
 
-.configuration {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: -10px;
-}
-
-.configuration * {
-    margin-bottom: 5px;
-}
-
 .to-costs-control {
     margin-bottom: 10px;
 }
