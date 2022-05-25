@@ -2,7 +2,9 @@
     <div class="panel" [formGroup]="form">
         <div>
             <select formControlName="index">
-                <option *ngFor="let i of plan.endElements.length | repeat" value="{{i}}">{{plan.endElements[i].path}}</option>
+                <option *ngFor="let i of plan.endElements.length | repeat" value="{{i}}">
+                    {{plan.endElements[i].path}}
+                </option>
             </select>
         </div>
         <div>

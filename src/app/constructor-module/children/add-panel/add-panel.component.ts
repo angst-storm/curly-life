@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { PlanElement } from '../../models/planElement.model';
-import { ModalService } from '../../services/modal.service';
+import { PlanElement } from '../../../models/planElement.model';
+import { ModalService } from '../../../services/modal.service';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({

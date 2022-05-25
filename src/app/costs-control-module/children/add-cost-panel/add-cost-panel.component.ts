@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ModalService } from '../../services/modal.service';
+import { ModalService } from '../../../services/modal.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PlanElement } from '../../models/planElement.model';
+import { PlanElement } from '../../../models/planElement.model';
 
 @Component({
     selector: 'add-cost-panel',

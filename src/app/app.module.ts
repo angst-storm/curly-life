@@ -18,16 +18,16 @@ const routes: Routes = [
         children: [
             {
                 path: 'user',
-                loadChildren: () => import('./user/user.module').then((m: any) => m.UserModule)
+                loadChildren: () => import('./user-module/user.module').then((m: any) => m.UserModule)
             },
             {
                 path: 'control',
-                loadChildren: () => import('./costs-control/costs-control.module').then((m: any) => m.CostsControlModule),
+                loadChildren: () => import('./costs-control-module/costs-control.module').then((m: any) => m.CostsControlModule),
                 canActivate: [AuthGuard]
             },
             {
                 path: 'constructor',
-                loadChildren: () => import('./constructor/constructor.module').then((m: any) => m.ConstructorModule),
+                loadChildren: () => import('./constructor-module/constructor.module').then((m: any) => m.ConstructorModule),
                 canActivate: [AuthGuard]
             },
             {

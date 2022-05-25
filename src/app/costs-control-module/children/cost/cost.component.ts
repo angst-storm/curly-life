@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Cost } from '../../models/cost.model';
+import { Cost } from '../../../models/cost.model';
 
 @Component({
     selector: 'cost',

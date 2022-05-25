@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
-import { PlanElement } from '../../models/planElement.model';
-import { ModalService } from '../../services/modal.service';
+import { PlanElement } from '../../../models/planElement.model';
+import { ModalService } from '../../../services/modal.service';
 import { AddPanelComponent } from '../add-panel/add-panel.component';
 
 @Component({

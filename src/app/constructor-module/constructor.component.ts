@@ -4,7 +4,7 @@ import { PlanElement } from '../models/planElement.model';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { ModalService } from '../services/modal.service';
-import { ConfPanelComponent } from './conf-panel/conf-panel.component';
+import { ConfPanelComponent } from './children/conf-panel/conf-panel.component';
 
 @Component({
     selector: 'constructor',
