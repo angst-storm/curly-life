@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthData } from '../models/auth.model';
 import { ServerService } from './server.service';
+import { map, Observable, Subscriber } from 'rxjs';
 
 
 @Injectable()
@@ -20,12 +21,12 @@ export class UserService {
         localStorage.setItem('token', value);
     }
 
-    public checkToken(): boolean {
+    public checkToken(): Observable<boolean> {
         if (this._token !== null) {
             return this._server.checkToken(this._token);
         }
 
-        return false;
+        return new Observable<boolean>((subscriber: Subscriber<boolean>) => subscriber.next(false));
     }
 
     public deleteToken(): void {
@@ -37,14 +38,15 @@ export class UserService {
         this._server.postUser(data);
     }
 
-    public authoriseUser(data: AuthData): boolean {
-        const token: string | null = this._server.getToken(data);
-        if (token !== null) {
-            this.updateToken(token);
+    public authoriseUser(data: AuthData): Observable<boolean> {
+        return this._server.getToken(data).pipe(map((token: string | null) => {
+            if (token !== null) {
+                this.updateToken(token);
 
-            return true;
-        }
+                return true;
+            }
 
-        return false;
+            return false;
+        }));
     }
 }

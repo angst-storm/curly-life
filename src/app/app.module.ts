@@ -10,6 +10,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { PlanService } from './services/planElements.service';
 import { UserService } from './services/user.service';
 import { ServerService } from './services/server.service';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
     {
@@ -45,6 +46,7 @@ const routes: Routes = [
         AppComponent,
     ],
     imports: [
+        HttpClientModule,
         BrowserModule,
         RouterModule.forRoot(routes)
     ],

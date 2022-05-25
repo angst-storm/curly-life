@@ -13,7 +13,10 @@ export class AddCostPanelComponent {
     @Output() public costAdded: EventEmitter<null> = new EventEmitter<null>();
 
     public form: FormGroup = new FormGroup({
-        index: new FormControl(0, Validators.required),
+        index: new FormControl(0, [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(this.plan.endElements.length - 1)]),
         sum: new FormControl(0, Validators.required),
     });
 

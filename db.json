@@ -1,0 +1,59 @@
+{
+  "authorise": [
+    {
+      "login": "test",
+      "password": "test",
+      "jwt": "eyJhbGciOiJNWSIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6InRlc3QiLCJwYXNzd29yZCI6InRlc3QifQ==.eyJhbGciOiJNWSIsInR5cCI6IkpXVCJ9SECRET_KEYeyJsb2dpbiI6InRlc3QiLCJwYXNzd29yZCI6InRlc3QifQ==",
+      "id": 1
+    }
+  ],
+  "plan": [
+    {
+      "jwt": "eyJhbGciOiJNWSIsInR5cCI6IkpXVCJ9SECRET_KEYeyJsb2dpbiI6InRlc3QiLCJwYXNzd29yZCI6InRlc3QifQ==",
+      "data": {
+        "sum": 35000,
+        "subElements": [
+          {
+            "name": "Обязательные расходы",
+            "percent": 50,
+            "subElements": [
+              {
+                "name": "Продукты",
+                "percent": 45,
+                "subElements": [],
+                "costs": []
+              },
+              {
+                "name": "ЖКХ",
+                "percent": 40,
+                "subElements": [],
+                "costs": []
+              },
+              {
+                "name": "Подписки",
+                "percent": 15,
+                "subElements": [],
+                "costs": []
+              }
+            ],
+            "costs": []
+          },
+          {
+            "name": "Необязательные расходы",
+            "percent": 30,
+            "subElements": [],
+            "costs": []
+          },
+          {
+            "name": "Накопления",
+            "percent": 20,
+            "subElements": [],
+            "costs": []
+          }
+        ],
+        "costs": []
+      },
+      "id": 1
+    }
+  ]
+}

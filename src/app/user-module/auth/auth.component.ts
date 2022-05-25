@@ -20,12 +20,13 @@ export class AuthComponent {
         this.wrongData = false;
         if (this.viewModel.form.valid){
             const model: AuthData = this.viewModel.toModel();
-            const isAuthorised : boolean = this._userService.authoriseUser(model);
-            if (isAuthorised) {
-                this._router.navigate(['/control']);
-            } else {
-                this.wrongData = !isAuthorised;
-            }
+            this._userService.authoriseUser(model).subscribe((isAuthorised: boolean) => {
+                if (isAuthorised) {
+                    this._router.navigate(['/control']);
+                } else {
+                    this.wrongData = true;
+                }
+            });
         }
     }
 }
