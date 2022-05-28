@@ -2,8 +2,11 @@
     <div>
         <label>Логин: </label>
         <input formControlName="login">
-        <span class="danger" *ngIf="viewModel.form.controls['login'].invalid && viewModel.form.controls['login'].touched">
-            Логин должен быть длиннее 6 символов
+        <span *ngIf="invalidLogin && viewModel.form.controls['login'].touched">
+            Логин должен быть длиннее 6 символов и состоять только из цифр, прописных или строчных букв латинского алфавита
+        </span>
+        <span *ngIf="viewModel.form.controls['login'].hasError('loginUsed')">
+            Логин уже занят
         </span>
     </div>
     <div>

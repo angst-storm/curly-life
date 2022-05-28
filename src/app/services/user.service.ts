@@ -34,6 +34,10 @@ export class UserService {
         localStorage.removeItem('token');
     }
 
+    public checkLogin(login: string): Observable<boolean> {
+        return this._server.checkLogin(login);
+    }
+
     public registerUser(data: AuthData): Observable<boolean> {
         return this._server.postUser(data).pipe(map(() => {
             return true;

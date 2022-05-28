@@ -17,6 +17,12 @@ export class ServerService {
     constructor(private _httpClient: HttpClient) {
     }
 
+    public checkLogin(login: string): Observable<boolean> {
+        return this._httpClient
+            .get<AuthDataOnServer[]>(`http://localhost:3000/users?login=${login}`)
+            .pipe(map((d: AuthDataOnServer[]) => d.length === 0));
+    }
+
     public postUser(data: AuthData): Observable<AuthDataOnServer> {
         return this._httpClient.post<AuthDataOnServer>('http://localhost:3000/users',
             {
