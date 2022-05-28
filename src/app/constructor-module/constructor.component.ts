@@ -32,6 +32,18 @@ export class ConstructorComponent {
         this.blocks = this.planService.plan.allElements;
     }
 
+    public toControlCosts(): void {
+        if (this._userService.token) {
+            this.planService.updatePlan(this._userService.token, this.planService.plan)
+                .subscribe((res: boolean) => {
+                    console.log(res);
+                    this._router.navigate(['/control']);
+                });
+        } else {
+            this.exit();
+        }
+    }
+
     public exit(): void {
         this._userService.deleteToken();
         this._router.navigate(['/user/auth']);

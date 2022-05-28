@@ -20,13 +20,19 @@ export class CostsControlComponent {
             planService.downloadPlan(this._userService.token).subscribe((plan: PlanElement) => {
                 this.sum = plan.sum;
                 this.blocks = plan.allElements;
-                this.costs = plan.costs;
+                this.costs = plan.allCosts;
             });
         }
     }
 
     public updateCosts(): void {
-        this.costs = this.planService.plan.costs;
+        if (this._userService.token) {
+            this.planService.updatePlan(this._userService.token, this.planService.plan)
+                .subscribe((res: boolean) => console.log(res));
+            this.costs = this.planService.plan.allCosts;
+        } else {
+            this.exit();
+        }
     }
 
     public exit(): void {

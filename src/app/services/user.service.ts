@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AuthData } from '../models/auth.model';
 import { ServerService } from './server.service';
 import { map, Observable, Subscriber } from 'rxjs';
-import { AuthDataOnServer } from './server.service.model/authOnServer.model';
 
 
 @Injectable()
@@ -35,8 +34,10 @@ export class UserService {
         localStorage.removeItem('token');
     }
 
-    public registerUser(data: AuthData): void {
-        this._server.postUser(data).subscribe((d: AuthDataOnServer) => console.log(d));
+    public registerUser(data: AuthData): Observable<boolean> {
+        return this._server.postUser(data).pipe(map(() => {
+            return true;
+        }));
     }
 
     public authoriseUser(data: AuthData): Observable<boolean> {

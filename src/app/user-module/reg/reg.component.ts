@@ -19,8 +19,9 @@ export class RegComponent {
     public submit(): void {
         if (this.viewModel.form.valid) {
             const data: AuthData = this.viewModel.toModel();
-            this._userService.registerUser(data);
-            this._router.navigate(['/user/auth']);
+            this._userService.registerUser(data).subscribe(() => {
+                this._router.navigate(['/user/auth']);
+            });
         }
     }
 }

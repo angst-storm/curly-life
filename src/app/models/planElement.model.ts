@@ -59,18 +59,26 @@ export class PlanElement {
         return this.parent === null ? 0 : this.parent.level + 1;
     }
 
+    public get subElements(): PlanElement[] {
+        return this._subElements.slice();
+    }
+
     public get costs(): Cost[] {
+        return this._costs.slice();
+    }
+
+    public get allCosts(): Cost[] {
         return !this._subElements.length ? this._costs : this._subElements
-            .reduce((a: Cost[], b: PlanElement) => a.concat(b.costs), [])
+            .reduce((a: Cost[], b: PlanElement) => a.concat(b.allCosts), [])
             .sort((a: Cost, b: Cost) => a.time < b.time ? 1 : a.time > b.time ? -1 : 0);
     }
 
-    public get costsSum(): number {
-        return this.costs.reduce((a: number, b: Cost) => a + b.sum, 0);
+    public get allCostsSum(): number {
+        return this.allCosts.reduce((a: number, b: Cost) => a + b.sum, 0);
     }
 
     public get fill(): number {
-        return Math.floor(this.costsSum / this.sum * 100);
+        return Math.floor(this.allCostsSum / this.sum * 100);
     }
 
     public get allElements(): PlanElement[] {

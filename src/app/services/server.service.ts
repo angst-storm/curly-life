@@ -25,7 +25,18 @@ export class ServerService {
             },
             {
                 headers: { 'ContentType': 'application/json' }
-            });
+            }).pipe(map((d: AuthDataOnServer): AuthDataOnServer => {
+            this._httpClient.post('http://localhost:3000/plans',
+                {
+                    data: new PlanOnServer(0, [], []),
+                    id: d.id
+                },
+                {
+                    headers: { 'ContentType': 'application/json' }
+                }).subscribe((res: object) => console.log(res));
+
+            return d;
+        }));
     }
 
     public getToken(data: AuthData): Observable<string | null> {
@@ -45,6 +56,22 @@ export class ServerService {
 
         return this._httpClient
             .get<any>(`http://localhost:3000/plans/${ServerService.decodeTokenOnServer(token).id}`)
+            .pipe(map((p: any) => p.data));
+    }
+
+    public putPlan(token: string, plan: PlanOnServer): Observable<PlanOnServer | null> {
+        if (!this.checkTokenOnServer(token)) {
+            return new Observable<null>((subscriber: Subscriber<null>) => subscriber.next(null));
+        }
+
+        return this._httpClient
+            .put<any>(`http://localhost:3000/plans/${ServerService.decodeTokenOnServer(token).id}`,
+                {
+                    data: plan,
+                },
+                {
+                    headers: { 'ContentType': 'application/json' }
+                })
             .pipe(map((p: any) => p.data));
     }
 

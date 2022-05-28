@@ -19,12 +19,7 @@
                 "name": "Продукты",
                 "percent": 45,
                 "subElements": [],
-                "costs": [
-                  {
-                    "sum": 1000,
-                    "time": 0
-                  }
-                ]
+                "costs": []
               },
               {
                 "name": "ЖКХ",
@@ -51,11 +46,7 @@
             "name": "Накопления",
             "percent": 20,
             "subElements": [],
-            "costs": [
-              {
-                "sum": 1000,
-                "time": 1
-              }]
+            "costs": []
           }
         ],
         "costs": []
