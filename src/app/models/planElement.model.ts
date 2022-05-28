@@ -92,11 +92,11 @@ export class PlanElement {
         return this._subElements.length !== 0;
     }
 
-    public createCost(sum: number): Cost {
+    public createCost(sum: number, time: number = Date.now()): Cost {
         if (this._subElements.length !== 0) {
             throw new PlanError('Добавлена трата в блок, у которого есть подблоки');
         }
-        const cost: Cost = new Cost(sum, this);
+        const cost: Cost = new Cost(this, sum, time);
         this._costs.push(cost);
 
         return cost;

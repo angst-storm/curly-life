@@ -11,14 +11,18 @@ import { Router } from '@angular/router';
     styleUrls: ['./costs-control.component.css']
 })
 export class CostsControlComponent {
-    public sum: number;
-    public blocks: PlanElement[];
-    public costs: Cost[];
+    public sum: number = 0;
+    public blocks: PlanElement[] = [];
+    public costs: Cost[] = [];
 
     constructor(public planService: PlanService, private _userService: UserService, private _router: Router) {
-        this.sum = planService.plan.sum;
-        this.blocks = planService.plan.allElements;
-        this.costs = planService.plan.costs;
+        if (this._userService.token) {
+            planService.downloadPlan(this._userService.token).subscribe((plan: PlanElement) => {
+                this.sum = plan.sum;
+                this.blocks = plan.allElements;
+                this.costs = plan.costs;
+            });
+        }
     }
 
     public updateCosts(): void {

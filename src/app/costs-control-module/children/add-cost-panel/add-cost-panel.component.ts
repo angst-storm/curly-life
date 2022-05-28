@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ModalService } from '../../../services/modal.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { PlanElement } from '../../../models/planElement.model';
 
 @Component({
@@ -16,7 +16,7 @@ export class AddCostPanelComponent {
         index: new FormControl(0, [
             Validators.required,
             Validators.min(0),
-            Validators.max(this.plan.endElements.length - 1)]),
+            (control: FormControl): ValidationErrors | null => control.value < this.plan.endElements.length ? null : { index: false },]),
         sum: new FormControl(0, Validators.required),
     });
 
@@ -35,7 +35,7 @@ export class AddCostPanelComponent {
 
     public submit(): void {
         if (this.form.valid) {
-            this.plan.endElements[this.form.controls['index'].value].createCost(this.form.controls['sum'].value);
+            console.log(this.plan.endElements[this.form.controls['index'].value].createCost(this.form.controls['sum'].value));
             this.costAdded.emit();
             this.close();
         }

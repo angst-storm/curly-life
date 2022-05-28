@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthData } from '../models/auth.model';
 import { ServerService } from './server.service';
 import { map, Observable, Subscriber } from 'rxjs';
+import { AuthDataOnServer } from './server.service.model/authOnServer.model';
 
 
 @Injectable()
@@ -35,7 +36,7 @@ export class UserService {
     }
 
     public registerUser(data: AuthData): void {
-        this._server.postUser(data);
+        this._server.postUser(data).subscribe((d: AuthDataOnServer) => console.log(d));
     }
 
     public authoriseUser(data: AuthData): Observable<boolean> {

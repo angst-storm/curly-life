@@ -9,9 +9,9 @@ export class Cost {
         return this.element.path;
     }
 
-    constructor(sum: number, element: PlanElement) {
+    constructor(element: PlanElement, sum: number, time: number) {
         this.sum = sum;
         this.element = element;
-        this.time = Date.now();
+        this.time = time;
     }
 }

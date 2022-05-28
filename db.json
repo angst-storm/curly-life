@@ -1,15 +1,13 @@
 {
-  "authorise": [
+  "users": [
     {
       "login": "test",
       "password": "test",
-      "jwt": "eyJhbGciOiJNWSIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6InRlc3QiLCJwYXNzd29yZCI6InRlc3QifQ==.eyJhbGciOiJNWSIsInR5cCI6IkpXVCJ9SECRET_KEYeyJsb2dpbiI6InRlc3QiLCJwYXNzd29yZCI6InRlc3QifQ==",
       "id": 1
     }
   ],
-  "plan": [
+  "plans": [
     {
-      "jwt": "eyJhbGciOiJNWSIsInR5cCI6IkpXVCJ9SECRET_KEYeyJsb2dpbiI6InRlc3QiLCJwYXNzd29yZCI6InRlc3QifQ==",
       "data": {
         "sum": 35000,
         "subElements": [
@@ -21,7 +19,12 @@
                 "name": "Продукты",
                 "percent": 45,
                 "subElements": [],
-                "costs": []
+                "costs": [
+                  {
+                    "sum": 1000,
+                    "time": 0
+                  }
+                ]
               },
               {
                 "name": "ЖКХ",
@@ -48,7 +51,11 @@
             "name": "Накопления",
             "percent": 20,
             "subElements": [],
-            "costs": []
+            "costs": [
+              {
+                "sum": 1000,
+                "time": 1
+              }]
           }
         ],
         "costs": []
