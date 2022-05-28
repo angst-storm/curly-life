@@ -20,7 +20,7 @@ export class BarComponent {
     }
 
     public get barFill(): number {
-        return this.fill <= 100 ? 47 / 100 * this.fill : 47;
+        return this.sum ? this.fill <= 100 ? 47 / 100 * this.fill : 47 : 0;
     }
 
     public get barColor(): string {
