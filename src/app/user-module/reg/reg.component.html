@@ -1,25 +1,28 @@
-<form [formGroup]="viewModel.form">
+<form [formGroup]="form">
     <div>
         <label>Логин: </label>
         <input formControlName="login">
-        <span *ngIf="invalidLogin && viewModel.form.controls['login'].touched">
+        <span *ngIf="(this.form.controls['login'].hasError('required') ||
+         this.form.controls['login'].hasError('pattern') ||
+          this.form.controls['login'].hasError('minlength')) &&
+           form.controls['login'].touched">
             Логин должен быть длиннее 6 символов и состоять только из цифр, прописных или строчных букв латинского алфавита
         </span>
-        <span *ngIf="viewModel.form.controls['login'].hasError('loginUsed')">
+        <span *ngIf="form.controls['login'].hasError('loginUsed')">
             Логин уже занят
         </span>
     </div>
     <div>
         <label>Пароль: </label>
         <input formControlName="password">
-        <span class="danger" *ngIf="viewModel.form.controls['password'].invalid && viewModel.form.controls['password'].touched">
+        <span class="danger" *ngIf="form.controls['password'].invalid && form.controls['password'].touched">
             Пароль должен быть длиннее 8 символов и состоять только из цифр, прописных или строчных букв латинского алфавита, а также символов !"#$%&'()*+,-.
         </span>
     </div>
     <div>
         <label>Подтверждение пароля: </label>
         <input formControlName="passwordConfirm">
-        <span class="danger" *ngIf="viewModel.form.hasError('notSame') && viewModel.form.controls['passwordConfirm'].touched">
+        <span class="danger" *ngIf="form.hasError('notSame') && form.controls['passwordConfirm'].touched">
             Пароли не совпадают
         </span>
     </div>

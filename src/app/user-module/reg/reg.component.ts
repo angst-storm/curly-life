@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { RegViewModel } from '../view-model/reg.view-model';
 import { UserService } from '../../services/user.service';
-import { AbstractControl, FormBuilder, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { AuthData } from '../../models/auth.model';
 import { map, Observable } from 'rxjs';
 
@@ -12,20 +11,34 @@ import { map, Observable } from 'rxjs';
     styleUrls: ['./reg.component.css']
 })
 export class RegComponent {
-    public viewModel: RegViewModel;
+    private static passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
+        return group.get('password')?.value === group.get('passwordConfirm')?.value ? null : { notSame: true };
+    };
+
+    public form: FormGroup = new FormGroup({
+        login: new FormControl('', [
+            Validators.required,
+            Validators.pattern(/^\w+$/),
+            Validators.minLength(6),
+        ], this.checkLoginValidator.bind(this)),
+        password: new FormControl('', [
+            Validators.required,
+            Validators.pattern(/^[\w!"#$%&'()*+,\-./]+$/),
+            Validators.minLength(8),
+        ]),
+        passwordConfirm: new FormControl('', Validators.required)
+    }, {
+        validators: RegComponent.passwordMatchValidator
+    });
 
     constructor(private _router: Router, private _userService: UserService, private _fb: FormBuilder) {
-        this.viewModel = new RegViewModel(this._fb);
-        this.viewModel.form.controls['login'].addAsyncValidators(this.checkLoginValidator.bind(this));
-    }
-
-    public get invalidLogin(): boolean {
-        return ['required', 'pattern', 'minlength'].some((e: string) => this.viewModel.form.controls['login'].hasError(e));
     }
 
     public submit(): void {
-        if (this.viewModel.form.valid) {
-            const data: AuthData = this.viewModel.toModel();
+        if (this.form.valid) {
+            const data: AuthData = new AuthData(
+                this.form.controls['login'].value,
+                this.form.controls['password'].value);
             this._userService.registerUser(data).subscribe(() => {
                 this._router.navigate(['/user/auth']);
             });

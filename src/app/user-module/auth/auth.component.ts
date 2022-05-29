@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthViewModel } from '../view-model/auth.view-model';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { AuthData } from '../../models/auth.model';
-import { FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'auth',
@@ -11,15 +10,22 @@ import { FormBuilder } from '@angular/forms';
     styleUrls: ['./auth.component.css']
 })
 export class AuthComponent {
-    public viewModel : AuthViewModel = new AuthViewModel(this._fb);
-    public wrongData : boolean = false;
+    public form: FormGroup = new FormGroup({
+        login: new FormControl('', Validators.required),
+        password: new FormControl('', Validators.required)
+    });
 
-    constructor (private _router : Router, private _userService : UserService, private _fb : FormBuilder) { }
+    public wrongData: boolean = false;
 
-    public submit() : void {
+    constructor(private _router: Router, private _userService: UserService) {
+    }
+
+    public submit(): void {
         this.wrongData = false;
-        if (this.viewModel.form.valid){
-            const model: AuthData = this.viewModel.toModel();
+        if (this.form.valid) {
+            const model: AuthData = new AuthData(
+                this.form.controls['login'].value,
+                this.form.controls['password'].value);
             this._userService.authoriseUser(model).subscribe((isAuthorised: boolean) => {
                 if (isAuthorised) {
                     this._router.navigate(['/control']);
