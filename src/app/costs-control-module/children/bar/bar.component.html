@@ -1,4 +1,5 @@
-<hr size="10" style="background-color: {{barColor}}; position: absolute; width: {{barFill}}%" noshade>
-<hr size="10" style="background-color: grey" noshade>
+<div class="bar">
+    <div class="progress" style="background-color: {{barColor}}; width: {{barFill}}%"></div>
+</div>
 <span>{{sum ? fill : 'Невозможно посчитать'}} %</span>
 <span class='right'>{{remainder}} ₽</span>

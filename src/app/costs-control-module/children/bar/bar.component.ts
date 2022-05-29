@@ -20,11 +20,11 @@ export class BarComponent {
     }
 
     public get barFill(): number {
-        return this.sum ? this.fill <= 100 ? 47 / 100 * this.fill : 47 : 0;
+        return this.sum ? this.fill <= 100 ? this.fill : 100 : 0;
     }
 
     public get barColor(): string {
-        return this.fill <= 50 ? 'lightgreen' : this.fill <= 100 ? 'yellow' : 'red';
+        return this.fill <= 50 ? 'lightgreen' : this.fill < 100 ? 'yellow' : 'red';
     }
 
 }

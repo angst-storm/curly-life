@@ -1,3 +1,13 @@
+.bar {
+    width: 100%;
+    margin: 10px 0 10px 0;
+    background-color: gray;
+}
+
+.progress {
+    height: 10px;
+}
+
 .right {
     float: right;
 }
