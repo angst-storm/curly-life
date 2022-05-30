@@ -20,7 +20,6 @@ export class ConstructorComponent {
         if (this._userService.token) {
             this.planService.downloadPlan(this._userService.token).subscribe((plan: PlanElement) => {
                 this.blocks = plan.allElements;
-                console.log('С сервера загружен новый план:', plan);
             });
         }
     }
@@ -36,8 +35,7 @@ export class ConstructorComponent {
     public toControlCosts(): void {
         if (this._userService.token) {
             this.planService.updatePlan(this._userService.token, this.planService.plan)
-                .subscribe((res: PlanElement) => {
-                    console.log('На сервер отправлен измененный план:', res);
+                .subscribe(() => {
                     this._router.navigate(['/control']);
                 });
         } else {
