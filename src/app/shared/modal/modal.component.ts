@@ -9,7 +9,7 @@ import { ModalService } from '../../services/modal.service';
 })
 export class ModalComponent implements OnInit, OnDestroy {
     @Input() public id: string = '';
-    private readonly _element: any;
+    private readonly _element: HTMLElement;
 
     constructor(private _modalService: ModalService, private _el: ElementRef) {
         this._element = _el.nativeElement;
@@ -23,12 +23,6 @@ export class ModalComponent implements OnInit, OnDestroy {
         }
 
         document.body.appendChild(this._element);
-
-        this._element.addEventListener('click', (el: any) => {
-            if (el.target.className === 'modal') {
-                this.close();
-            }
-        });
 
         this._modalService.add(this);
     }

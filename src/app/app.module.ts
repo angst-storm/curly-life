@@ -11,6 +11,9 @@ import { PlanService } from './services/planElements.service';
 import { UserService } from './services/user.service';
 import { ServerService } from './services/server.service';
 import { HttpClientModule } from '@angular/common/http';
+import { UserModule } from './user-module/user.module';
+import { CostsControlModule } from './costs-control-module/costs-control.module';
+import { ConstructorModule } from './constructor-module/constructor.module';
 
 const routes: Routes = [
     {
@@ -19,16 +22,19 @@ const routes: Routes = [
         children: [
             {
                 path: 'user',
-                loadChildren: () => import('./user-module/user.module').then((m: any) => m.UserModule)
+                loadChildren: (): Promise<UserModule> => import('./user-module/user.module')
+                    .then((m: any) => m.UserModule)
             },
             {
                 path: 'control',
-                loadChildren: () => import('./costs-control-module/costs-control.module').then((m: any) => m.CostsControlModule),
+                loadChildren: (): Promise<CostsControlModule> => import('./costs-control-module/costs-control.module')
+                    .then((m: any) => m.CostsControlModule),
                 canActivate: [AuthGuard]
             },
             {
                 path: 'constructor',
-                loadChildren: () => import('./constructor-module/constructor.module').then((m: any) => m.ConstructorModule),
+                loadChildren: (): Promise<ConstructorModule> => import('./constructor-module/constructor.module')
+                    .then((m: any) => m.ConstructorModule),
                 canActivate: [AuthGuard]
             },
             {

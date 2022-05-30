@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable, Subscriber } from 'rxjs';
 import { PlanOnServer } from './server.service.model/planOnServer.model';
 import { AuthDataOnServer } from './server.service.model/authOnServer.model';
+import { DataOnServer } from './server.service.model/dataOnServer.model';
 
 
 @Injectable()
@@ -61,8 +62,8 @@ export class ServerService {
         }
 
         return this._httpClient
-            .get<any>(`http://localhost:3000/plans/${ServerService.decodeTokenOnServer(token).id}`)
-            .pipe(map((p: any) => p.data));
+            .get<DataOnServer>(`http://localhost:3000/plans/${ServerService.decodeTokenOnServer(token).id}`)
+            .pipe(map((p: DataOnServer) => p.data));
     }
 
     public putPlan(token: string, plan: PlanOnServer): Observable<PlanOnServer | null> {
@@ -71,14 +72,14 @@ export class ServerService {
         }
 
         return this._httpClient
-            .put<any>(`http://localhost:3000/plans/${ServerService.decodeTokenOnServer(token).id}`,
+            .put<DataOnServer>(`http://localhost:3000/plans/${ServerService.decodeTokenOnServer(token).id}`,
                 {
                     data: plan,
                 },
                 {
                     headers: { 'ContentType': 'application/json' }
                 })
-            .pipe(map((p: any) => p.data));
+            .pipe(map((p: DataOnServer) => p.data));
     }
 
     private encodeTokenOnServer(data: AuthDataOnServer): string {

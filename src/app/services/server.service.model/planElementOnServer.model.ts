@@ -7,5 +7,4 @@ export class PlanElementOnServer {
         public subElements: PlanElementOnServer[],
         public costs: CostOnServer[]) {
     }
-
 }

@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserComponent } from './user.component';
 import { FormsModule } from '@angular/forms';
+import { AuthModule } from './auth/auth.module';
+import { RegModule } from './reg/reg.module';
 
 const routes: Routes = [
     {
@@ -10,11 +12,13 @@ const routes: Routes = [
         children: [
             {
                 path: 'auth',
-                loadChildren: () => import('./auth/auth.module').then((m : any) => m.AuthModule)
+                loadChildren: (): Promise<AuthModule> => import('./auth/auth.module')
+                    .then((m : any) => m.AuthModule)
             },
             {
                 path: 'reg',
-                loadChildren: () => import('./reg/reg.module').then((m : any) => m.RegModule)
+                loadChildren: (): Promise<RegModule> => import('./reg/reg.module')
+                    .then((m : any) => m.RegModule)
             },
             {
                 path: '**',
