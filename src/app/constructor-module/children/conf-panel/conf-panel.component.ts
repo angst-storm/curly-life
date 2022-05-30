@@ -9,14 +9,14 @@ import { AddPanelComponent } from '../add-panel/add-panel.component';
     styleUrls: ['./conf-panel.component.css']
 })
 export class ConfPanelComponent {
-    @Output() planChanged: EventEmitter<null> = new EventEmitter<null>();
+    @Output() public planChanged: EventEmitter<null> = new EventEmitter<null>();
     public configuredBlock: PlanElement = PlanElement.createPlan(0);
-
-    constructor(private _modalService: ModalService) {
-    }
 
     @ViewChild(AddPanelComponent, { static: false })
     private _addPanel: AddPanelComponent | undefined;
+
+    constructor(private _modalService: ModalService) {
+    }
 
     public addSubBlock(block: PlanElement): void {
         this.close();
