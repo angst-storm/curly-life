@@ -33,14 +33,11 @@ export class ServerService {
             {
                 headers: { 'ContentType': 'application/json' }
             }).pipe(map((d: AuthDataOnServer): AuthDataOnServer => {
-            this._httpClient.post('http://localhost:3000/plans',
-                {
-                    data: new PlanOnServer(0, [], []),
-                    id: d.id
-                },
+            this._httpClient.post<DataOnServer>('http://localhost:3000/plans',
+                new DataOnServer(new PlanOnServer(0, [], []), d.id),
                 {
                     headers: { 'ContentType': 'application/json' }
-                }).subscribe((res: object) => console.log(res));
+                }).subscribe((res: DataOnServer) => console.log('На сервере создан план для нового пользователя:', res));
 
             return d;
         }));

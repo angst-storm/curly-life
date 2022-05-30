@@ -17,9 +17,7 @@ export class ModalComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         if (!this.id) {
-            console.error('У модального окна нет ID');
-
-            return;
+            throw new Error('У модального окна нет ID');
         }
 
         document.body.appendChild(this._element);

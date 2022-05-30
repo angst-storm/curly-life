@@ -35,7 +35,7 @@ export class AddCostPanelComponent {
 
     public submit(): void {
         if (this.form.valid) {
-            console.log(this.plan.endElements[this.form.controls['index'].value].createCost(this.form.controls['sum'].value));
+            this.plan.endElements[this.form.controls['index'].value].createCost(this.form.controls['sum'].value);
             this.costAdded.emit();
             this.close();
         }

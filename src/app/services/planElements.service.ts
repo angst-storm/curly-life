@@ -58,13 +58,13 @@ export class PlanService {
         }));
     }
 
-    public updatePlan(token: string, plan: PlanElement): Observable<boolean> {
+    public updatePlan(token: string, plan: PlanElement): Observable<PlanElement> {
         return this._server.putPlan(token, PlanService.serializePlan(plan)).pipe(map((res: PlanOnServer | null) => {
             if (!res) {
                 throw new PlanError('Не удалось обновить план - токен не действителен');
             }
 
-            return true;
+            return this.plan;
         }));
     }
 }

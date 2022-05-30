@@ -1,9 +1,9 @@
-<button (click)="exit()">Выйти</button>
-<button class="to-costs-control" (click)="toControlCosts()">Назад</button>
-<div class="budget">
+<button id="exit" (click)="exit()">Выйти</button>
+<button id="to-costs-control" (click)="toControlCosts()">Сохранить и назад</button>
+<div id="budget">
     Бюджет: <input [(ngModel)]="planService.plan.sum" placeholder="name">
 </div>
-<div class="blocks">
+<div id="blocks">
     <block *ngFor="let block of blocks"
            [name]="block.name"
            [percent]="block.percent"

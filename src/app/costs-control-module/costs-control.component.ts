@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PlanService } from '../services/planElements.service';
 import { PlanElement } from '../models/planElement.model';
 import { Cost } from '../models/cost.model';
@@ -17,10 +17,11 @@ export class CostsControlComponent {
 
     constructor(public planService: PlanService, private _userService: UserService, private _router: Router) {
         if (this._userService.token) {
-            planService.downloadPlan(this._userService.token).subscribe((plan: PlanElement) => {
+            this.planService.downloadPlan(this._userService.token).subscribe((plan: PlanElement) => {
                 this.sum = plan.sum;
                 this.blocks = plan.allElements;
                 this.costs = plan.allCosts;
+                console.log('С сервера загружен новый план:', plan);
             });
         }
     }
@@ -28,7 +29,7 @@ export class CostsControlComponent {
     public updateCosts(): void {
         if (this._userService.token) {
             this.planService.updatePlan(this._userService.token, this.planService.plan)
-                .subscribe((res: boolean) => console.log(res));
+                .subscribe((res: PlanElement) => console.log('На сервер отправлен план с новой тратой:', res));
             this.costs = this.planService.plan.allCosts;
         } else {
             this.exit();

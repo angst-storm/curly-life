@@ -3,7 +3,6 @@ import { PlanService } from '../services/planElements.service';
 import { PlanElement } from '../models/planElement.model';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
-import { ModalService } from '../services/modal.service';
 import { ConfPanelComponent } from './children/conf-panel/conf-panel.component';
 
 @Component({
@@ -12,16 +11,18 @@ import { ConfPanelComponent } from './children/conf-panel/conf-panel.component';
     styleUrls: ['./constructor.component.css']
 })
 export class ConstructorComponent {
-    public blocks: PlanElement[];
+    public blocks: PlanElement[] = [];
 
     @ViewChild(ConfPanelComponent, { static: false })
     public confPanel: ConfPanelComponent | undefined;
 
-    constructor(public planService: PlanService,
-        private _userService: UserService,
-        private _router: Router,
-        private _modalService: ModalService) {
-        this.blocks = planService.plan.allElements;
+    constructor(public planService: PlanService, private _userService: UserService, private _router: Router) {
+        if (this._userService.token) {
+            this.planService.downloadPlan(this._userService.token).subscribe((plan: PlanElement) => {
+                this.blocks = plan.allElements;
+                console.log('С сервера загружен новый план:', plan);
+            });
+        }
     }
 
     public configure(block: PlanElement): void {
@@ -35,8 +36,8 @@ export class ConstructorComponent {
     public toControlCosts(): void {
         if (this._userService.token) {
             this.planService.updatePlan(this._userService.token, this.planService.plan)
-                .subscribe((res: boolean) => {
-                    console.log(res);
+                .subscribe((res: PlanElement) => {
+                    console.log('На сервер отправлен измененный план:', res);
                     this._router.navigate(['/control']);
                 });
         } else {
