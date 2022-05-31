@@ -47,8 +47,20 @@ export class PlanService {
         this.plan = PlanElement.createPlan(0);
     }
 
-    public downloadPlan(token: string): Observable<PlanElement> {
-        return this._server.getPlan(token).pipe(map((plan: PlanOnServer | null) => {
+    public getPlans(token: string): Observable<{[id: number]: PlanElement}> {
+        return this._server.getPlans(token)
+            .pipe(map((plans: { [id: number]: PlanOnServer }) => {
+                const dict: {[id: number]: PlanElement} = {};
+                for (const id in plans) {
+                    dict[id] = PlanService.deserializePlan(plans[id]);
+                }
+
+                return dict;
+            }));
+    }
+
+    public downloadPlan(token: string, id: number): Observable<PlanElement> {
+        return this._server.getPlan(token, id).pipe(map((plan: PlanOnServer | null) => {
             if (!plan) {
                 throw new PlanError('Не удалось подгрузить план - токен не действителен');
             }
@@ -58,8 +70,8 @@ export class PlanService {
         }));
     }
 
-    public updatePlan(token: string, plan: PlanElement): Observable<PlanElement> {
-        return this._server.putPlan(token, PlanService.serializePlan(plan)).pipe(map((res: PlanOnServer | null) => {
+    public updatePlan(token: string, id: number, plan: PlanElement): Observable<PlanElement> {
+        return this._server.putPlan(token, id, PlanService.serializePlan(plan)).pipe(map((res: PlanOnServer | null) => {
             if (!res) {
                 throw new PlanError('Не удалось обновить план - токен не действителен');
             }

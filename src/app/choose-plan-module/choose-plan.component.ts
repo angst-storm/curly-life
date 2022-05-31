@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
+import { PlanElement } from '../models/planElement.model';
+import { PlanService } from '../services/planElements.service';
 
 @Component({
     selector: 'choose-plan',
@@ -8,26 +10,32 @@ import { Router } from '@angular/router';
     styleUrls: ['./choose-plan.component.css']
 })
 export class ChoosePlanComponent {
-    public plansCount: number = 0;
     public deleteMode: boolean = false;
+    public plans: { [id: number]: PlanElement } = {};
 
-    constructor(private _userService: UserService, private _router: Router) {
+    constructor(private _userService: UserService, private _planService: PlanService, private _router: Router) {
+        if (this._userService.token) {
+            this._planService.getPlans(this._userService.token)
+                .subscribe((plans: { [id: number]: PlanElement }) => {
+                    this.plans = plans;
+                });
+        }
     }
 
     public add(): void {
-        this.plansCount += 1;
+        console.error('Добавить новый план');
     }
 
-    public delete(i: number): void {
-        alert(i);
+    public delete(id: string): void {
+        console.error(`Удалить план по ID ${id}`);
     }
 
-    public toControl(): void {
-        this._router.navigate(['/control']);
+    public toControl(id: string): void {
+        this._router.navigate(['control', id]);
     }
 
     public exit(): void {
         this._userService.deleteToken();
-        this._router.navigate(['/user/auth']);
+        this._router.navigate(['user', 'auth']);
     }
 }

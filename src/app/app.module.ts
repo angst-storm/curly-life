@@ -34,20 +34,20 @@ const routes: Routes = [
 
             },
             {
-                path: 'control',
+                path: 'control/:id',
                 loadChildren: (): Promise<CostsControlModule> => import('./costs-control-module/costs-control.module')
                     .then((m: any) => m.CostsControlModule),
                 canActivate: [AuthGuard]
             },
             {
-                path: 'constructor',
+                path: 'constructor/:id',
                 loadChildren: (): Promise<ConstructorModule> => import('./constructor-module/constructor.module')
                     .then((m: any) => m.ConstructorModule),
                 canActivate: [AuthGuard]
             },
             {
                 path: '**',
-                redirectTo: '/control',
+                redirectTo: '/choose',
                 pathMatch: 'full'
             }
         ]

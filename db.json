@@ -4,6 +4,11 @@
       "login": "test",
       "password": "test",
       "id": 1
+    },
+    {
+      "login": "angstorm",
+      "password": "test",
+      "id": 2
     }
   ],
   "plans": [
@@ -51,7 +56,35 @@
         ],
         "costs": []
       },
+      "user": 1,
       "id": 1
+    },
+    {
+      "data": {
+        "sum": "0",
+        "subElements": [],
+        "costs": []
+      },
+      "user": 1,
+      "id": 2
+    },
+    {
+      "data": {
+        "sum": 0,
+        "subElements": [],
+        "costs": []
+      },
+      "user": 1,
+      "id": 3
+    },
+    {
+      "data": {
+        "sum": 0,
+        "subElements": [],
+        "costs": []
+      },
+      "user": 2,
+      "id": 4
     }
   ]
 }

@@ -3,7 +3,7 @@ import { PlanService } from '../services/planElements.service';
 import { PlanElement } from '../models/planElement.model';
 import { Cost } from '../models/cost.model';
 import { UserService } from '../services/user.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'costs-control',
@@ -15,19 +15,22 @@ export class CostsControlComponent {
     public blocks: PlanElement[] = [];
     public costs: Cost[] = [];
 
-    constructor(public planService: PlanService, private _userService: UserService, private _router: Router) {
+    constructor(public planService: PlanService, private _userService: UserService,
+        private _route: ActivatedRoute, private _router: Router) {
         if (this._userService.token) {
-            this.planService.downloadPlan(this._userService.token).subscribe((plan: PlanElement) => {
-                this.sum = plan.sum;
-                this.blocks = plan.allElements;
-                this.costs = plan.allCosts;
-            });
+            this.planService.downloadPlan(this._userService.token, this._route.snapshot.params['id'])
+                .subscribe((plan: PlanElement) => {
+                    this.sum = plan.sum;
+                    this.blocks = plan.allElements;
+                    this.costs = plan.allCosts;
+                });
         }
     }
 
     public updateCosts(): void {
         if (this._userService.token) {
-            this.planService.updatePlan(this._userService.token, this.planService.plan).subscribe();
+            this.planService.updatePlan(this._userService.token, this._route.snapshot.params['id'], this.planService.plan)
+                .subscribe();
             this.costs = this.planService.plan.allCosts;
         } else {
             this.exit();
@@ -35,15 +38,15 @@ export class CostsControlComponent {
     }
 
     public toChoosePlan(): void {
-        this._router.navigate(['/choose']);
+        this._router.navigate(['choose']);
     }
 
     public toConstructor(): void {
-        this._router.navigate(['/constructor']);
+        this._router.navigate(['constructor', this._route.snapshot.params['id']]);
     }
 
     public exit(): void {
         this._userService.deleteToken();
-        this._router.navigate(['/user/auth']);
+        this._router.navigate(['user', 'auth']);
     }
 }

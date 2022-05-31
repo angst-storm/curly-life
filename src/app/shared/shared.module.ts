@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ModalComponent } from './modal/modal.component';
 import { RedDirective } from '../directives/red.directive';
 import { HeaderComponent } from './header/header.component';
+import { DictEnumPipe } from '../pipes/dictEnum.pipe';
 
 @NgModule({
     imports: [
@@ -15,7 +16,8 @@ import { HeaderComponent } from './header/header.component';
         ModalComponent,
         HeaderComponent,
         RepeatPipe,
-        RedDirective
+        RedDirective,
+        DictEnumPipe
     ],
     declarations: [
         BlockComponent,
@@ -23,6 +25,7 @@ import { HeaderComponent } from './header/header.component';
         HeaderComponent,
         RepeatPipe,
         RedDirective,
+        DictEnumPipe,
     ]
 })
 export class SharedModule {

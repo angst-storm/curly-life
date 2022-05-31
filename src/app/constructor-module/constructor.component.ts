@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { PlanService } from '../services/planElements.service';
 import { PlanElement } from '../models/planElement.model';
 import { UserService } from '../services/user.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfPanelComponent } from './children/conf-panel/conf-panel.component';
 
 @Component({
@@ -16,11 +16,12 @@ export class ConstructorComponent {
     @ViewChild(ConfPanelComponent, { static: false })
     public confPanel: ConfPanelComponent | undefined;
 
-    constructor(public planService: PlanService, private _userService: UserService, private _router: Router) {
+    constructor(public planService: PlanService, private _userService: UserService, private _route: ActivatedRoute, private _router: Router) {
         if (this._userService.token) {
-            this.planService.downloadPlan(this._userService.token).subscribe((plan: PlanElement) => {
-                this.blocks = plan.allElements;
-            });
+            this.planService.downloadPlan(this._userService.token, this._route.snapshot.params['id'])
+                .subscribe((plan: PlanElement) => {
+                    this.blocks = plan.allElements;
+                });
         }
     }
 
@@ -33,14 +34,14 @@ export class ConstructorComponent {
     }
 
     public toChoosePlan(): void {
-        this._router.navigate(['/choose']);
+        this._router.navigate(['choose']);
     }
 
     public toCostsControl(): void {
         if (this._userService.token) {
-            this.planService.updatePlan(this._userService.token, this.planService.plan)
+            this.planService.updatePlan(this._userService.token, this._route.snapshot.params['id'], this.planService.plan)
                 .subscribe(() => {
-                    this._router.navigate(['/control']);
+                    this._router.navigate(['control', this._route.snapshot.params['id']]);
                 });
         } else {
             this.exit();
@@ -49,6 +50,6 @@ export class ConstructorComponent {
 
     public exit(): void {
         this._userService.deleteToken();
-        this._router.navigate(['/user/auth']);
+        this._router.navigate(['user', 'auth']);
     }
 }
