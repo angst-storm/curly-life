@@ -1,8 +1,4 @@
-<div id="header">
-    <img id="logo" src="/assets/bw-logo.png" alt="curly boy">
-    <span id="h0">Кучеряво живем</span>
-    <div id="exit" (click)="exit()">Выйти</div>
-</div>
+<curly-header (exitClick)="exit()"></curly-header>
 <button id="to-costs-control" (click)="toControlCosts()">Сохранить и назад</button>
 <div id="budget">
     Бюджет: <input [(ngModel)]="planService.plan.sum" placeholder="name">

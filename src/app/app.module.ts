@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserModule } from './user-module/user.module';
 import { CostsControlModule } from './costs-control-module/costs-control.module';
 import { ConstructorModule } from './constructor-module/constructor.module';
+import { ChoosePlanModule } from './choose-plan-module/choose-plan.module';
 
 const routes: Routes = [
     {
@@ -24,6 +25,13 @@ const routes: Routes = [
                 path: 'user',
                 loadChildren: (): Promise<UserModule> => import('./user-module/user.module')
                     .then((m: any) => m.UserModule)
+            },
+            {
+                path: 'choose',
+                loadChildren: (): Promise<ChoosePlanModule> => import('./choose-plan-module/choose-plan.module')
+                    .then((m: any) => m.ChoosePlanModule),
+                canActivate: [AuthGuard]
+
             },
             {
                 path: 'control',

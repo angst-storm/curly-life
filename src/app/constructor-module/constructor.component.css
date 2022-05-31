@@ -1,35 +1,5 @@
-#header {
-    display: flex;
-    align-items: flex-end;
+curly-header {
     width: 50%;
-    margin-bottom: 20px;
-    font: 35px 'Montserrat';
-    -webkit-text-stroke: 2px black;
-    color: gray;
-}
-
-#logo {
-    width: 70px;
-    height: 70px;
-}
-
-#h0 {
-    line-height: 25px;
-    margin-left: -7px;
-}
-
-#exit {
-    font-size: 25px;
-    line-height: 20px;
-    margin-left: auto;
-}
-
-#exit:hover {
-    color: black;
-}
-
-#exit:active {
-    color: white;
 }
 
 #to-costs-control {

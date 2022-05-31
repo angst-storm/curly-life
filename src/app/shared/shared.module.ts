@@ -4,6 +4,7 @@ import { BlockComponent } from './block/block.component';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from './modal/modal.component';
 import { RedDirective } from '../directives/red.directive';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
     imports: [
@@ -12,12 +13,14 @@ import { RedDirective } from '../directives/red.directive';
     exports: [
         BlockComponent,
         ModalComponent,
+        HeaderComponent,
         RepeatPipe,
         RedDirective
     ],
     declarations: [
         BlockComponent,
         ModalComponent,
+        HeaderComponent,
         RepeatPipe,
         RedDirective,
     ]
