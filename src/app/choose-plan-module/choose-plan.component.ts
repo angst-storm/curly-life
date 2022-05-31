@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
-import { PlanElement } from '../models/planElement.model';
 import { PlanService } from '../services/planElements.service';
 
 @Component({
@@ -11,26 +10,38 @@ import { PlanService } from '../services/planElements.service';
 })
 export class ChoosePlanComponent {
     public deleteMode: boolean = false;
-    public plans: { [id: number]: PlanElement } = {};
+    public plansIDs: number[] = [];
 
     constructor(private _userService: UserService, private _planService: PlanService, private _router: Router) {
         if (this._userService.token) {
-            this._planService.getPlans(this._userService.token)
-                .subscribe((plans: { [id: number]: PlanElement }) => {
-                    this.plans = plans;
+            this._planService.getPlansIDs(this._userService.token)
+                .subscribe((plans: number[]) => {
+                    this.plansIDs = plans;
                 });
         }
     }
 
     public add(): void {
-        console.error('Добавить новый план');
+        if (this._userService.token) {
+            this._planService.createPlan(this._userService.token).subscribe((res: number) => {
+                this.plansIDs.push(res);
+            });
+        }
     }
 
-    public delete(id: string): void {
-        console.error(`Удалить план по ID ${id}`);
+    public delete(id: number): void {
+        if (this._userService.token) {
+            this._planService.deletePlan(this._userService.token, +id).subscribe(
+                (res: boolean) => {
+                    if (res) {
+                        this.plansIDs.splice(this.plansIDs.indexOf(id), 1);
+                    }
+                }
+            );
+        }
     }
 
-    public toControl(id: string): void {
+    public toControl(id: number): void {
         this._router.navigate(['control', id]);
     }
 

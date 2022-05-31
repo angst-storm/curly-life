@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthData } from '../models/auth.model';
 import { HttpClient } from '@angular/common/http';
-import { map, MonoTypeOperatorFunction, Observable, Subscriber, tap } from 'rxjs';
+import { map, mergeMap, MonoTypeOperatorFunction, Observable, Subscriber, tap } from 'rxjs';
 import { PlanOnServer } from './server.service.model/planOnServer.model';
 import { AuthDataOnServer } from './server.service.model/authOnServer.model';
 import { DataOnServer } from './server.service.model/dataOnServer.model';
@@ -40,16 +40,7 @@ export class ServerService {
             {
                 headers: { 'ContentType': 'application/json' }
             })
-            .pipe(ServerService.log<AuthDataOnServer>('На сервере создан новый пользователь:'))
-            .pipe(tap((d: AuthDataOnServer) => {
-                this._httpClient.post<DataOnServer>('http://localhost:3000/plans',
-                    new DataOnServer(new PlanOnServer(0, [], []), d.id, d.id),
-                    {
-                        headers: { 'ContentType': 'application/json' }
-                    })
-                    .pipe(ServerService.log<DataOnServer>('На сервере создан новый план для пользователя:'))
-                    .subscribe();
-            }));
+            .pipe(ServerService.log<AuthDataOnServer>('На сервере создан новый пользователь:'));
     }
 
     public getToken(data: AuthData): Observable<string | null> {
@@ -64,21 +55,18 @@ export class ServerService {
             .pipe(ServerService.log<boolean>(`Проверен на подлинность токен ${token}. Токен подлинный:`));
     }
 
-    public getPlans(token: string): Observable<{ [id: number]: PlanOnServer }> {
+    public getPlansIDs(token: string): Observable<number[]> {
         if (!this.checkTokenOnServer(token)) {
             return new Observable<[]>((subscriber: Subscriber<[]>) => subscriber.next([]))
-                .pipe(ServerService.log<[]>(`Запрошены планы с сервера. Токен ${token} не действителен:`));
+                .pipe(ServerService.log<[]>(`Запрошены id планов с сервера. Токен ${token} не действителен:`));
         }
 
         return this._httpClient
             .get<DataOnServer[]>(`http://localhost:3000/plans?user=${ServerService.decodeTokenOnServer(token).id}`)
-            .pipe(ServerService.log<DataOnServer[]>('Запрошены и приняты планы с сервера:'))
             .pipe(map((res: DataOnServer[]) => {
-                const dict: { [id: number]: PlanOnServer } = {};
-                res.forEach((d: DataOnServer) => dict[d.id] = d.data);
-
-                return dict;
-            }));
+                return res.map((d: DataOnServer) => d.id);
+            }))
+            .pipe(ServerService.log<number[]>('Запрошены и приняты id планов с сервера:'));
     }
 
     public getPlan(token: string, id: number): Observable<PlanOnServer | null> {
@@ -87,10 +75,38 @@ export class ServerService {
                 .pipe(ServerService.log<null>(`Запрошен план с сервера. Токен ${token} не действителен:`));
         }
 
-        return this._httpClient
-            .get<DataOnServer>(`http://localhost:3000/plans/${id}`)
-            .pipe(ServerService.log<DataOnServer>('Запрошен и принят план с сервера:'))
-            .pipe(map((p: DataOnServer) => p.data));
+        return this.getPlansIDs(token)
+            .pipe(mergeMap((res: number[]) => {
+                if (res.includes(+id)) {
+                    return this._httpClient
+                        .get<DataOnServer>(`http://localhost:3000/plans/${id}`)
+                        .pipe(ServerService.log<DataOnServer>(`Для токена ${token} запрошен план c id = ${id} с сервера:`))
+                        .pipe(map((p: DataOnServer) => p.data));
+                } else {
+                    return new Observable<null>((subscriber: Subscriber<null>) => subscriber.next(null))
+                        .pipe(ServerService.log<null>(`План с ID ${id} не принадлежит токену ${token}:`));
+                }
+            }));
+    }
+
+    public createPlan(token: string): Observable<number | null> {
+        if (!this.checkTokenOnServer(token)) {
+            return new Observable<null>((subscriber: Subscriber<null>) => subscriber.next(null))
+                .pipe(ServerService.log<null>(`Попытка создать план на сервере. Токен ${token} не действителен:`));
+        }
+
+        return this._httpClient.post<DataOnServer>('http://localhost:3000/plans',
+            {
+                data: new PlanOnServer(0, [], []),
+                user: ServerService.decodeTokenOnServer(token).id
+            },
+            {
+                headers: {
+                    'ContentType': 'application/json'
+                }
+            })
+            .pipe(ServerService.log<DataOnServer>(`На сервере создан новый план:`))
+            .pipe(map((res: DataOnServer) => res.id));
     }
 
     public putPlan(token: string, id: number, plan: PlanOnServer): Observable<PlanOnServer | null> {
@@ -99,17 +115,45 @@ export class ServerService {
                 .pipe(ServerService.log<null>(`Попытка обновить план на сервере. Токен ${token} не действителен:`));
         }
 
-        return this._httpClient
-            .put<DataOnServer>(`http://localhost:3000/plans/${id}`,
-                {
-                    data: plan,
-                    user: ServerService.decodeTokenOnServer(token).id
-                },
-                {
-                    headers: { 'ContentType': 'application/json' }
-                })
-            .pipe(ServerService.log<DataOnServer>('Обновлен план на сервере:'))
-            .pipe(map((p: DataOnServer) => p.data));
+        return this.getPlansIDs(token)
+            .pipe(mergeMap((res: number[]) => {
+                if (res.includes(+id)) {
+                    return this._httpClient
+                        .put<DataOnServer>(`http://localhost:3000/plans/${id}`,
+                            {
+                                data: plan,
+                                user: ServerService.decodeTokenOnServer(token).id
+                            },
+                            {
+                                headers: { 'ContentType': 'application/json' }
+                            })
+                        .pipe(ServerService.log<DataOnServer>('Обновлен план на сервере:'))
+                        .pipe(map((p: DataOnServer) => p.data));
+                } else {
+                    return new Observable<null>((subscriber: Subscriber<null>) => subscriber.next(null))
+                        .pipe(ServerService.log<null>(`План с ID ${id} не принадлежит токену ${token}:`));
+                }
+            }));
+    }
+
+    public deletePlan(token: string, id: number): Observable<PlanOnServer | null> {
+        if (!this.checkTokenOnServer(token)) {
+            return new Observable<null>((subscriber: Subscriber<null>) => subscriber.next(null))
+                .pipe(ServerService.log<null>(`Попытка удалить план с сервера. Токен ${token} не действителен:`));
+        }
+
+        return this.getPlansIDs(token)
+            .pipe(mergeMap((res: number[]) => {
+                if (res.includes(+id)) {
+                    return this._httpClient
+                        .delete<DataOnServer>(`http://localhost:3000/plans/${id}`)
+                        .pipe(ServerService.log<DataOnServer>('С сервера удален план:'))
+                        .pipe(map((p: DataOnServer) => p.data));
+                } else {
+                    return new Observable<null>((subscriber: Subscriber<null>) => subscriber.next(null))
+                        .pipe(ServerService.log<null>(`План с ID ${id} не принадлежит токену ${token}:`));
+                }
+            }));
     }
 
     private encodeTokenOnServer(data: AuthDataOnServer): string {

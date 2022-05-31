@@ -47,22 +47,14 @@ export class PlanService {
         this.plan = PlanElement.createPlan(0);
     }
 
-    public getPlans(token: string): Observable<{[id: number]: PlanElement}> {
-        return this._server.getPlans(token)
-            .pipe(map((plans: { [id: number]: PlanOnServer }) => {
-                const dict: {[id: number]: PlanElement} = {};
-                for (const id in plans) {
-                    dict[id] = PlanService.deserializePlan(plans[id]);
-                }
-
-                return dict;
-            }));
+    public getPlansIDs(token: string): Observable<number[]> {
+        return this._server.getPlansIDs(token);
     }
 
     public downloadPlan(token: string, id: number): Observable<PlanElement> {
         return this._server.getPlan(token, id).pipe(map((plan: PlanOnServer | null) => {
             if (!plan) {
-                throw new PlanError('Не удалось подгрузить план - токен не действителен');
+                throw new PlanError('Не удалось подгрузить план');
             }
             this.plan = PlanService.deserializePlan(plan);
 
@@ -73,10 +65,25 @@ export class PlanService {
     public updatePlan(token: string, id: number, plan: PlanElement): Observable<PlanElement> {
         return this._server.putPlan(token, id, PlanService.serializePlan(plan)).pipe(map((res: PlanOnServer | null) => {
             if (!res) {
-                throw new PlanError('Не удалось обновить план - токен не действителен');
+                throw new PlanError('Не удалось обновить план');
             }
 
             return this.plan;
+        }));
+    }
+
+    public deletePlan(token: string, id: number): Observable<boolean> {
+        return this._server.deletePlan(token, id)
+            .pipe(map((res: PlanOnServer | null) => res !== null));
+    }
+
+    public createPlan(token: string): Observable<number> {
+        return this._server.createPlan(token).pipe(map((res: number | null) => {
+            if (!res) {
+                throw new PlanError('Не удалось создать план');
+            }
+
+            return res;
         }));
     }
 }

@@ -4,6 +4,7 @@ import { PlanElement } from '../models/planElement.model';
 import { Cost } from '../models/cost.model';
 import { UserService } from '../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, Observable, Subscriber } from 'rxjs';
 
 @Component({
     selector: 'costs-control',
@@ -19,10 +20,18 @@ export class CostsControlComponent {
         private _route: ActivatedRoute, private _router: Router) {
         if (this._userService.token) {
             this.planService.downloadPlan(this._userService.token, this._route.snapshot.params['id'])
-                .subscribe((plan: PlanElement) => {
-                    this.sum = plan.sum;
-                    this.blocks = plan.allElements;
-                    this.costs = plan.allCosts;
+                .pipe(catchError(() => {
+                    this._router.navigate(['choose']);
+
+                    return new Observable<null>((subscriber: Subscriber<null>) => subscriber.next(null));
+                }))
+                .subscribe((plan: PlanElement | null) => {
+                    if (plan) {
+                        plan = plan as PlanElement;
+                        this.sum = plan.sum;
+                        this.blocks = plan.allElements;
+                        this.costs = plan.allCosts;
+                    }
                 });
         }
     }

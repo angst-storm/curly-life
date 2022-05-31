@@ -4,6 +4,7 @@ import { PlanElement } from '../models/planElement.model';
 import { UserService } from '../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfPanelComponent } from './children/conf-panel/conf-panel.component';
+import { catchError, Observable, Subscriber } from 'rxjs';
 
 @Component({
     selector: 'constructor',
@@ -19,8 +20,15 @@ export class ConstructorComponent {
     constructor(public planService: PlanService, private _userService: UserService, private _route: ActivatedRoute, private _router: Router) {
         if (this._userService.token) {
             this.planService.downloadPlan(this._userService.token, this._route.snapshot.params['id'])
-                .subscribe((plan: PlanElement) => {
-                    this.blocks = plan.allElements;
+                .pipe(catchError(() => {
+                    this._router.navigate(['choose']);
+
+                    return new Observable<null>((subscriber: Subscriber<null>) => subscriber.next(null));
+                }))
+                .subscribe((plan: PlanElement | null) => {
+                    if (plan) {
+                        this.blocks = plan.allElements;
+                    }
                 });
         }
     }
