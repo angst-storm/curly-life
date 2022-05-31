@@ -22,21 +22,28 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transition-duration: 250ms;
 }
 
 .plan:nth-child(5n) {
     margin-right: 0;
 }
 
+
 .plan:hover {
-    background-color: gray;
     box-shadow: 0 0 5px 5px red;
     font-size: 25px;
+    background: linear-gradient(crimson, gold, yellowgreen, teal, crimson) 0 0;
+    animation: background 2s infinite linear;
+}
+
+@keyframes background {
+    100% {
+        background-position: 0 135px;
+    }
 }
 
 .plan:active {
-    background-color: lightgray;
+    box-shadow: 0 0 5px 5px lightcoral;
 }
 
 .plan.delete {
