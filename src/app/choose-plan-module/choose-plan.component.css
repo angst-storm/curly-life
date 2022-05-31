@@ -1,3 +1,58 @@
-curly-header {
+.wrapper {
     width: 50%;
+}
+
+#delete-mode {
+    margin-top: 10px;
+}
+
+#plans {
+    border: 2px solid black;
+    padding: 10px 10px 0 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.plan {
+    width: 135px;
+    height: 135px;
+    border: 2px solid black;
+    margin: 0 10px 10px 0;
+    -webkit-user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition-duration: 250ms;
+}
+
+.plan:nth-child(5n) {
+    margin-right: 0;
+}
+
+.plan:hover {
+    background-color: gray;
+    box-shadow: 0 0 5px 5px red;
+    font-size: 25px;
+}
+
+.plan:active {
+    background-color: lightgray;
+}
+
+.plan.delete {
+    background-color: firebrick;
+}
+
+.plan.delete:hover {
+    background-color: darkred;
+    box-shadow: 0 0 5px 5px red;
+    font-size: 25px;
+}
+
+.plan.delete:active {
+    background-color: red;
+}
+
+.plan.add {
+    font-size: 50px;
 }

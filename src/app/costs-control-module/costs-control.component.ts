@@ -34,6 +34,14 @@ export class CostsControlComponent {
         }
     }
 
+    public toChoosePlan(): void {
+        this._router.navigate(['/choose']);
+    }
+
+    public toConstructor(): void {
+        this._router.navigate(['/constructor']);
+    }
+
     public exit(): void {
         this._userService.deleteToken();
         this._router.navigate(['/user/auth']);

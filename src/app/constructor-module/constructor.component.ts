@@ -32,7 +32,11 @@ export class ConstructorComponent {
         this.blocks = this.planService.plan.allElements;
     }
 
-    public toControlCosts(): void {
+    public toChoosePlan(): void {
+        this._router.navigate(['/choose']);
+    }
+
+    public toCostsControl(): void {
         if (this._userService.token) {
             this.planService.updatePlan(this._userService.token, this.planService.plan)
                 .subscribe(() => {

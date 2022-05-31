@@ -1,15 +1,18 @@
-<curly-header (exitClick)="exit()"></curly-header>
-<button id="to-costs-control" (click)="toControlCosts()">Сохранить и назад</button>
-<div id="budget">
-    Бюджет: <input [(ngModel)]="planService.plan.sum" placeholder="name">
+<div class="wrapper">
+    <curly-header (exitClick)="exit()"></curly-header>
+    <button id="to-costs-control" (click)="toCostsControl()">Сохранить и назад</button>
+    <button id="to-choose-plan" (click)="toChoosePlan()">К списку планов</button>
+    <div id="budget">
+        Бюджет: <input [(ngModel)]="planService.plan.sum" placeholder="name">
+    </div>
+    <div id="blocks">
+        <block *ngFor="let block of blocks"
+               [name]="block.name"
+               [percent]="block.percent"
+               [level]="block.level"
+               [sum]="block.sum"
+               (blockClick)="configure(block)"></block>
+        <button (click)="confPanel?.addSubBlock(planService.plan)" [disabled]="!planService.plan.freePercent">+</button>
+    </div>
+    <conf-panel (planChanged)="updateBlocks()"></conf-panel>
 </div>
-<div id="blocks">
-    <block *ngFor="let block of blocks"
-           [name]="block.name"
-           [percent]="block.percent"
-           [level]="block.level"
-           [sum]="block.sum"
-           (blockClick)="configure(block)"></block>
-    <button (click)="confPanel?.addSubBlock(planService.plan)" [disabled]="!planService.plan.freePercent">+</button>
-</div>
-<conf-panel (planChanged)="updateBlocks()"></conf-panel>

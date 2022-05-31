@@ -1,4 +1,4 @@
-curly-header {
+.wrapper {
     width: 50%;
 }
 
@@ -6,13 +6,12 @@ curly-header {
     margin-bottom: 10px;
 }
 
-#exit {
-    margin-right: 10px;
+#to-choose-plan {
+    float: right;
 }
 
 #budget, #blocks {
     border: 2px solid black;
-    width: 50%;
     padding: 10px;
     margin-bottom: 10px;
     box-sizing: border-box;

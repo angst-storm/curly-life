@@ -1,18 +1,21 @@
-<curly-header (exitClick)="exit()"></curly-header>
-<button id="to-constructor" routerLink="/constructor" routerLinkActive="active">Настроить план</button>
-<div id="budget">Бюджет: {{sum}}</div>
-<button id="add-cost" (click)="addCostPanel.open()">Добавить трату</button>
-<div id="plan-list">
-    <block *ngFor="let block of blocks"
-           [name]="block.name"
-           [percent]="block.percent"
-           [sum]="block.sum"
-           [level]="block.level">
-        <bar [sum]="block.sum" [costsSum]="block.allCostsSum"></bar>
-    </block>
+<div class="wrapper">
+    <curly-header (exitClick)="exit()"></curly-header>
+    <button id="to-constructor" (click)="toConstructor()">Настроить план</button>
+    <button id="to-choose-plan" (click)="toChoosePlan()">К списку планов</button>
+    <div id="budget">Бюджет: {{sum}}</div>
+    <button id="add-cost" (click)="addCostPanel.open()">Добавить трату</button>
+    <div id="plan-list">
+        <block *ngFor="let block of blocks"
+               [name]="block.name"
+               [percent]="block.percent"
+               [sum]="block.sum"
+               [level]="block.level">
+            <bar [sum]="block.sum" [costsSum]="block.allCostsSum"></bar>
+        </block>
+    </div>
+    <div id="costs-list">
+        <cost *ngFor="let cost of costs" [name]="cost.name" [sum]="cost.sum" [cost]="cost"
+              (costDeleted)="updateCosts()"></cost>
+    </div>
+    <add-cost-panel [plan]="planService.plan" (costAdded)="updateCosts()" #addCostPanel></add-cost-panel>
 </div>
-<div id="costs-list">
-    <cost *ngFor="let cost of costs" [name]="cost.name" [sum]="cost.sum" [cost]="cost"
-          (costDeleted)="updateCosts()"></cost>
-</div>
-<add-cost-panel [plan]="planService.plan" (costAdded)="updateCosts()" #addCostPanel></add-cost-panel>

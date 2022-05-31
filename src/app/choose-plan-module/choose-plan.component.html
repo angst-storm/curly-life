@@ -1,1 +1,14 @@
-<curly-header (exitClick)="exit()"></curly-header>
+<div class="wrapper">
+    <curly-header (exitClick)="exit()"></curly-header>
+    <div id="plans">
+        <div *ngFor="let plan of plansCount | repeat"
+             (click)="d.classList.contains('delete') ? delete(plan) : toControl()"
+             class="plan"
+             [class.delete]="deleteMode"
+             #d>
+            План {{plan}}
+        </div>
+        <div (click)="add()" class="add plan">+</div>
+    </div>
+    <button (click)="deleteMode = !deleteMode" id="delete-mode">Удалить</button>
+</div>

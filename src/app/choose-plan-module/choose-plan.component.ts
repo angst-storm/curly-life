@@ -8,9 +8,22 @@ import { Router } from '@angular/router';
     styleUrls: ['./choose-plan.component.css']
 })
 export class ChoosePlanComponent {
-    public plans: string[] = ['План 1', 'План 2', 'План 3'];
+    public plansCount: number = 0;
+    public deleteMode: boolean = false;
 
     constructor(private _userService: UserService, private _router: Router) {
+    }
+
+    public add(): void {
+        this.plansCount += 1;
+    }
+
+    public delete(i: number): void {
+        alert(i);
+    }
+
+    public toControl(): void {
+        this._router.navigate(['/control']);
     }
 
     public exit(): void {
